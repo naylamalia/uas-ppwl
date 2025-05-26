@@ -10,6 +10,9 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Customer\ProductController as CustomerProductController;
 use App\Http\Controllers\Customer\ReviewController;
+use App\Http\Controllers\Customer\OrderController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
+
 
 
 /*
@@ -105,4 +108,19 @@ Route::middleware(['auth', 'customer'])->prefix('products')->name('customer.prod
     Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
 });
 
+
+
+// Untuk customer (middleware auth:customer)
+Route::middleware('auth')->group(function () {
+    Route::get('/orders', [OrderController::class, 'index']);
+    Route::post('/orders', [OrderController::class, 'store']);
+    Route::get('/orders/{id}', [OrderController::class, 'show']);
+});
+
+// Untuk admin (middleware auth:admin)
+Route::prefix('admin')->middleware('auth')->group(function () {
+    Route::get('/orders', [AdminOrderController::class, 'index']);
+    Route::get('/orders/{id}', [AdminOrderController::class, 'show']);
+    Route::delete('/orders/{id}', [AdminOrderController::class, 'destroy']);
+});
 
