@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -31,9 +30,7 @@ class RegisterController extends Controller
      */
     public function store(Request $request)
     {
-
         $request->validate([
-
             'name' => 'required|min:3|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:7|max:255',
@@ -51,9 +48,10 @@ class RegisterController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        // Assign role customer ke user baru
+        $user->assignRole('customer');
 
         Auth::login($user);
-
 
         return redirect(RouteServiceProvider::HOME);
     }
