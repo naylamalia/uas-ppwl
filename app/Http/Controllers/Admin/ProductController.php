@@ -12,10 +12,38 @@ use App\Http\Requests\UpdateProductRequest;
 class ProductController extends Controller
 {
     // Tampilkan semua produk
-    public function index()
+    public function index($request)
     {
-        $products = Product::latest()->paginate(10);
-        return view('admin.products.index', compact('products'));
+        $query = Product::query();
+
+        if ($request->filled('search')) {
+            $query->where('name', 'like', '%'. $request->search . '%');
+        }
+
+        if ($request->filled('category')) {
+        $query->where('category', $request->category);
+        }
+
+        if ($request->filled('price')) {
+            switch ($request->price) {
+                case '1':
+                    $query->whereBetween('price', [1000000, 5000000]);
+                    break;
+                case '2':
+                    $query->whereBetween('price', [6000000, 10000000]);
+                    break;
+                case '3':
+                    $query->whereBetween('price', [11000000, 15000000]);
+                    break;
+                case '4':
+                    $query->where('price', '>', 15000000);
+                    break;
+            }
+        }
+
+        $products = Product::latest()->paginate(10)->withQueryString();
+        $categories = Product::CATEGORIES;
+        return view('admin.products.index', compact('products', 'categories'));
     }
 
     // Tampilkan form tambah produk
