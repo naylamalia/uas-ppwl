@@ -118,12 +118,11 @@ Route::middleware('auth')->group(function () {
 
 // Untuk admin (middleware auth:admin)
 Route::prefix('admin')->middleware('auth')->group(function () {
-
-    //Products
+    // Products
     Route::resource('products', ProductController::class);
     Route::get('/products/export/pdf', [ProductController::class, 'exportPdf'])->name('products.export.pdf');
 
-    //Orders
+    // Orders
     Route::get('/orders', [AdminOrderController::class, 'index']);
     Route::get('/orders/{id}', [AdminOrderController::class, 'show']);
     Route::delete('/orders/{id}', [AdminOrderController::class, 'destroy']);
