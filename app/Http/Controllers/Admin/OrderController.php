@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -12,6 +13,14 @@ class OrderController extends Controller
     {
         $orders = Order::with('user', 'product')->get();
         return view('admin.orders.index', compact('orders'));
+    }
+
+    public function exportPdf()
+    {
+        $orders = Order::with('user', 'orderItems.product')->latest()->get();
+
+        $pdf = Pdf::loadView('admin.orders.report', compact('orders'));
+        return $pdf->download('laporan-order.pdf');
     }
 
     public function show($id)

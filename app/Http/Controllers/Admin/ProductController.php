@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ProductController extends Controller
 {
@@ -50,6 +51,14 @@ class ProductController extends Controller
         $categories = Product::CATEGORIES;
 
         return view('admin.products.index', compact('products', 'categories'));
+    }
+
+    public function exportPdf()
+    {
+        $products = Product::latest()->get();
+
+        $pdf = Pdf::loadView('admin.products.report', compact('products'));
+        return $pdf->download('laporan-produk.pdf');
     }
 
     // Tampilkan form tambah produk
