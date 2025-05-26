@@ -61,7 +61,7 @@
                                     <p class="mb-0">Nice to meet you! Please enter your details.</p>
                                 </div>
                                 <div class="card-body">
-                                    <form role="form" method="POST" action="sign-up">
+                                    <form role="form" method="POST" action="{{ route('sign-up') }}">
                                         @csrf
                                         <label>Name</label>
                                         <div class="mb-3">
