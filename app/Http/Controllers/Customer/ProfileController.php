@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Models\User;
+use App\Models\Customer;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,8 +13,9 @@ class ProfileController extends Controller
     public function index()
     {
         $user = User::find(Auth::id());
+        $customer = Customer::where('user_id', Auth::id())->first();
 
-        return view('laravel-examples.user-profile', compact('user'));
+        return view('customer.profile.index', compact('user', 'customer'));
     }
 
     public function update(Request $request)
@@ -25,16 +27,18 @@ class ProfileController extends Controller
         $request->validate([
             'name' => 'required|min:3|max:255',
             'email' => 'required|email|max:255|unique:users,email,' . Auth::id(),
-            'location' => 'max:255',
-            'phone' => 'numeric|digits:10',
-            'about' => 'max:255',
+            'phone' => 'nullable|numeric|digits_between:10,15',
+            'location' => 'nullable|max:255',
+            'about' => 'nullable|max:255',
+            'address' => 'nullable|max:255',
+            'date_of_birth' => 'nullable|date',
+            'gender' => 'nullable|in:male,female',
         ], [
             'name.required' => 'Name is required',
             'email.required' => 'Email is required',
         ]);
 
         $user = User::find(Auth::id());
-
         $user->update([
             'name' => $request->name,
             'email' => $request->email,
@@ -43,6 +47,17 @@ class ProfileController extends Controller
             'about' => $request->about,
         ]);
 
-        return back()->with('success', 'Profile updated successfully.');
+        $customer = Customer::firstOrCreate(
+            ['user_id' => Auth::id()],
+            []
+        );
+        $customer->update([
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'date_of_birth' => $request->date_of_birth,
+            'gender' => $request->gender,
+        ]);
+
+        return redirect()->route('customer.profile')->with('success', 'Profile updated successfully.');
     }
 }
