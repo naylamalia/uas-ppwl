@@ -2,45 +2,55 @@
 
 namespace App\Http\Controllers\Customer;
 
-use App\Models\Order;
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    // Tampilkan semua order milik customer yang login
     public function index()
     {
-        $orders = Order::where('user_id', Auth::id())->with('product')->latest()->get();
-        return response()->json($orders);
+        $user = Auth::user();
+        $orders = Order::where('user_id', $user->id)->with('product')->get();
+
+        return view('customer.orders.index', compact('orders'));
     }
 
-    // Simpan order baru
+    public function show($id)
+    {
+        $user = Auth::user();
+        $order = Order::where('id', $id)
+                      ->where('user_id', $user->id)
+                      ->with('product')
+                      ->firstOrFail();
+
+        return view('customer.orders.show', compact('order'));
+    }
+
     public function store(Request $request)
     {
         $request->validate([
             'product_id' => 'required|exists:products,id',
+            'quantity' => 'required|integer|min:1',
             'alamat' => 'required|string',
             'rincian_pemesanan' => 'required|string',
             'pilihan_cod' => 'boolean',
         ]);
 
+        $product = \App\Models\Product::findOrFail($request->product_id);
+
         $order = Order::create([
             'user_id' => Auth::id(),
-            'product_id' => $request->product_id,
+            'product_id' => $product->id,
+            'quantity' => $request->quantity,
+            'price' => $product->price * $request->quantity,
             'alamat' => $request->alamat,
             'rincian_pemesanan' => $request->rincian_pemesanan,
             'pilihan_cod' => $request->pilihan_cod ?? false,
+            'status_order' => 'belum_selesai',
         ]);
 
-        return response()->json(['message' => 'Order berhasil dibuat.', 'order' => $order], 201);
-    }
-
-    // Detail order milik customer
-    public function show($id)
-    {
-        $order = Order::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
-        return response()->json($order);
+        return redirect()->route('customer.orders.index')->with('success', 'Order berhasil dibuat!');
     }
 }

@@ -45,4 +45,10 @@ class Product extends Model
     {
         return $this->hasMany(CartItem::class);
     }
+
+    // Relasi ke Order
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }
