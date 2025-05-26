@@ -39,4 +39,10 @@ class Product extends Model
     {
         return $this->hasMany(Review::class);
     }
+
+    // Relasi ke CartItem
+    public function cartItems()
+    {
+        return $this->hasMany(CartItem::class);
+    }
 }
