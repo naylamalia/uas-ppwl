@@ -62,19 +62,24 @@ class ProductController extends Controller
     // Simpan produk baru
     public function store(StoreProductRequest $request)
     {
-        $data = $request->validated();
+    $data = $request->validated();
 
-        // Buat kode produk otomatis
-        $data['code'] = 'PRD-' . strtoupper(Str::random(6));
+    // Buat kode produk otomatis
+    $data['code'] = 'PRD-' . strtoupper(Str::random(6));
 
-        // Simpan gambar jika ada
-        if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('products', 'public');
-        }
+    // Simpan gambar jika ada
+    if ($request->hasFile('image') && $request->file('image')->isValid()) {
+        $data['image'] = $request->file('image')->store('products', 'public');
+    }
 
-        Product::create($data);
+    // Pastikan tidak ada key image jika kosong/null
+    if (empty($data['image'] ?? null)) {
+        unset($data['image']);
+    }
 
-        return redirect()->route('admin.products.index')->with('success', 'Produk berhasil ditambahkan.');
+    Product::create($data);
+
+    return redirect()->route('admin.products.index')->with('success', 'Produk berhasil ditambahkan.');
     }
 
     // Tampilkan detail produk
