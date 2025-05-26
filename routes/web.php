@@ -12,18 +12,12 @@ use App\Http\Controllers\Customer\ProductController as CustomerProductController
 use App\Http\Controllers\Customer\ReviewController;
 use App\Http\Controllers\Customer\OrderController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
-
-
+use App\Http\Controllers\Customer\CartController; // Tambahan controller cart
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
 */
 
 Route::get('/', function () {
@@ -108,7 +102,12 @@ Route::middleware(['auth', 'customer'])->prefix('products')->name('customer.prod
     Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
 });
 
-
+// Untuk cart (keranjang belanja) - hanya customer yang login
+Route::middleware(['auth', 'customer'])->prefix('cart')->name('cart.')->group(function () {
+    Route::get('/', [CartController::class, 'index'])->name('index'); // Tampilkan isi keranjang
+    Route::post('/add/{product}', [CartController::class, 'add'])->name('add'); // Tambah ke keranjang
+    Route::delete('/remove/{id}', [CartController::class, 'remove'])->name('remove'); // Hapus dari keranjang
+});
 
 // Untuk customer (middleware auth:customer)
 Route::middleware('auth')->group(function () {
@@ -123,4 +122,3 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/orders/{id}', [AdminOrderController::class, 'show']);
     Route::delete('/orders/{id}', [AdminOrderController::class, 'destroy']);
 });
-
