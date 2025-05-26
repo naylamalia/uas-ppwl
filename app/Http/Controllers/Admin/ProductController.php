@@ -6,24 +6,28 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 
 class ProductController extends Controller
 {
     // Tampilkan semua produk
-    public function index($request)
+    public function index(Request $request)
     {
         $query = Product::query();
 
+        // Pencarian berdasarkan nama produk
         if ($request->filled('search')) {
-            $query->where('name', 'like', '%'. $request->search . '%');
+            $query->where('name', 'like', '%' . $request->search . '%');
         }
 
+        // Filter berdasarkan kategori
         if ($request->filled('category')) {
-        $query->where('category', $request->category);
+            $query->where('category', $request->category);
         }
 
+        // Filter berdasarkan rentang harga
         if ($request->filled('price')) {
             switch ($request->price) {
                 case '1':
@@ -41,8 +45,10 @@ class ProductController extends Controller
             }
         }
 
-        $products = Product::latest()->paginate(10)->withQueryString();
+        // Ambil produk yang sudah difilter dan urutkan terbaru
+        $products = $query->latest()->paginate(10)->withQueryString();
         $categories = Product::CATEGORIES;
+
         return view('admin.products.index', compact('products', 'categories'));
     }
 
@@ -53,7 +59,7 @@ class ProductController extends Controller
         return view('admin.products.create', compact('categories'));
     }
 
-    // Simpan produk baru dengan StoreProductRequest
+    // Simpan produk baru
     public function store(StoreProductRequest $request)
     {
         $data = $request->validated();
@@ -61,6 +67,7 @@ class ProductController extends Controller
         // Buat kode produk otomatis
         $data['code'] = 'PRD-' . strtoupper(Str::random(6));
 
+        // Simpan gambar jika ada
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('products', 'public');
         }
@@ -77,7 +84,7 @@ class ProductController extends Controller
         return view('admin.products.show', compact('product'));
     }
 
-    // Form edit produk
+    // Tampilkan form edit produk
     public function edit($id)
     {
         $product = Product::findOrFail($id);
@@ -85,13 +92,13 @@ class ProductController extends Controller
         return view('admin.products.edit', compact('product', 'categories'));
     }
 
-    // Update produk dengan UpdateProductRequest
+    // Update data produk
     public function update(UpdateProductRequest $request, $id)
     {
         $product = Product::findOrFail($id);
-
         $data = $request->validated();
 
+        // Ganti gambar jika ada gambar baru
         if ($request->hasFile('image')) {
             if ($product->image) {
                 Storage::disk('public')->delete($product->image);
@@ -109,6 +116,7 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
 
+        // Hapus gambar jika ada
         if ($product->image) {
             Storage::disk('public')->delete($product->image);
         }
