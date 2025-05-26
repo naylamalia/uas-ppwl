@@ -43,9 +43,15 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    // Relasi ke Review
     public function reviews()
     {
-    return $this->hasMany(Review::class);
+        return $this->hasMany(Review::class);
     }
 
+    // Relasi ke CartItem
+    public function cartItems()
+    {
+        return $this->hasMany(CartItem::class);
+    }
 }
