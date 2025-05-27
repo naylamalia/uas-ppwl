@@ -12,7 +12,7 @@ use App\Http\Controllers\Customer\ProductController as CustomerProductController
 use App\Http\Controllers\Customer\ReviewController;
 use App\Http\Controllers\Customer\OrderController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
-use App\Http\Controllers\Customer\CartController; // Tambahan controller cart
+use App\Http\Controllers\Customer\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,14 +55,12 @@ Route::get('/signup', function () {
 Route::get('/sign-up', [RegisterController::class, 'create'])
     ->middleware('guest')
     ->name('sign-up');
-
 Route::post('/sign-up', [RegisterController::class, 'store'])
     ->middleware('guest');
 
 Route::get('/sign-in', [LoginController::class, 'create'])
     ->middleware('guest')
     ->name('sign-in');
-
 Route::post('/sign-in', [LoginController::class, 'store'])
     ->middleware('guest');
 
@@ -73,7 +71,6 @@ Route::post('/logout', [LoginController::class, 'destroy'])
 Route::get('/forgot-password', [ForgotPasswordController::class, 'create'])
     ->middleware('guest')
     ->name('password.request');
-
 Route::post('/forgot-password', [ForgotPasswordController::class, 'store'])
     ->middleware('guest')
     ->name('password.email');
@@ -81,50 +78,44 @@ Route::post('/forgot-password', [ForgotPasswordController::class, 'store'])
 Route::get('/reset-password/{token}', [ResetPasswordController::class, 'create'])
     ->middleware('guest')
     ->name('password.reset');
-
 Route::post('/reset-password', [ResetPasswordController::class, 'store'])
     ->middleware('guest');
 
+// User profile & management
 Route::get('/laravel-examples/user-profile', [ProfileController::class, 'index'])->name('users.profile')->middleware('auth');
 Route::put('/laravel-examples/user-profile/update', [ProfileController::class, 'update'])->name('users.update')->middleware('auth');
 Route::get('/laravel-examples/users-management', [UserController::class, 'index'])->name('users-management')->middleware('auth');
 
-Route::prefix('admin')->name('admin.')->group(function () {
-    Route::resource('products', ProductController::class);
-});
-
+// Produk untuk customer
 Route::middleware(['auth', 'customer'])->prefix('products')->name('customer.products.')->group(function () {
     Route::get('/', [CustomerProductController::class, 'index'])->name('index');
     Route::get('/{id}', [CustomerProductController::class, 'show'])->name('show');
-
     Route::get('/{product}/reviews', [ReviewController::class, 'index'])->name('reviews.index');
     Route::post('/{product}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
     Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
 });
 
-// Untuk cart (keranjang belanja) - hanya customer yang login
+// Cart (keranjang belanja) untuk customer
 Route::middleware(['auth', 'customer'])->prefix('cart')->name('cart.')->group(function () {
-    Route::get('/', [CartController::class, 'index'])->name('index'); // Tampilkan isi keranjang
-    Route::post('/add/{product}', [CartController::class, 'add'])->name('add'); // Tambah ke keranjang
-    Route::delete('/remove/{id}', [CartController::class, 'remove'])->name('remove'); // Hapus dari keranjang
+    Route::get('/', [CartController::class, 'index'])->name('index');
+    Route::post('/add/{product}', [CartController::class, 'add'])->name('add');
+    Route::delete('/remove/{id}', [CartController::class, 'remove'])->name('remove');
 });
 
-// Untuk customer (middleware auth:customer)
-Route::middleware('auth')->group(function () {
+// Order untuk customer
+Route::middleware(['auth', 'customer'])->group(function () {
     Route::get('/orders', [OrderController::class, 'index']);
     Route::post('/orders', [OrderController::class, 'store']);
     Route::get('/orders/{id}', [OrderController::class, 'show']);
 });
 
 // Untuk admin (middleware auth:admin)
-Route::prefix('admin')->middleware('auth')->group(function () {
-
-    //Products
+Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
     Route::resource('products', ProductController::class);
     Route::get('/products/export/pdf', [ProductController::class, 'exportPdf'])->name('products.export.pdf');
 
-    //Orders
-    Route::get('/orders', [AdminOrderController::class, 'index']);
+    // Orders
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{id}', [AdminOrderController::class, 'show']);
     Route::delete('/orders/{id}', [AdminOrderController::class, 'destroy']);
     Route::get('/orders/export/pdf', [AdminOrderController::class, 'exportPdf'])->name('orders.export.pdf');
