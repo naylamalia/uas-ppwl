@@ -37,24 +37,29 @@ class LoginController extends Controller
         if (Auth::attempt($credentials, $rememberMe)) {
             $request->session()->regenerate();
 
-            return redirect()->intended('/dashboard');
+            $user = Auth::user();
+            // Check if the user has a role
+            if ($user->role === 'admin') {
+                return redirect()->intended('/admin/dashboard');
+            } else {
+                return redirect()->intended('/customer/dashboard');
+            }
         }
 
-
-
         return back()->withErrors([
-            'message' => 'The provided credentials do not match our records.',
+            'message' => 'Email atau password salah.',
         ])->withInput($request->only('email'));
     }
-
+    
 
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    
     public function destroy(Request $request)
     {
         Auth::logout();
