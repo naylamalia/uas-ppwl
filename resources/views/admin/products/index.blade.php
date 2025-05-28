@@ -44,45 +44,32 @@
         </div>
     </form>
 
-    <div class="table-responsive shadow rounded">
-        <table class="table table-hover align-middle text-center">
-            <thead class="table-primary text-primary fw-semibold">
-                <tr>
-                    <th>Kode</th>
-                    <th>Nama</th>
-                    <th>Kategori</th>
-                    <th>Harga</th>
-                    <th>Stok</th>
-                    <th>Gambar</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($products as $product)
-                <tr class="align-middle">
-                    <td class="text-uppercase">{{ $product->code }}</td>
-                    <td class="fw-semibold">{{ $product->name }}</td>
-                    <td>{{ $product->category }}</td>
-                    <td class="text-success fw-bold">Rp{{ number_format($product->price, 0, ',', '.') }}</td>
-                    <td>
-                        @if($product->stock > 0)
-                            <span class="badge bg-success">{{ $product->stock }}</span>
-                        @else
-                            <span class="badge bg-danger">Habis</span>
-                        @endif
-                    </td>
-                    <td>
-                        @if($product->image)
-                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="img-thumbnail" style="max-width: 70px; max-height: 70px;">
-                        @else
-                            <span class="text-muted">-</span>
-                        @endif
-                    </td>
-                    <td>
-                        <a href="{{ route('admin.products.show', $product) }}" class="btn btn-sm btn-info shadow-sm" title="Lihat">
+    {{-- Layout grid e-commerce --}}
+    <div class="row">
+        @forelse($products as $product)
+        <div class="col-md-3 mb-4">
+            <div class="card h-100 shadow-sm">
+                @if($product->image)
+                    <img src="{{ asset('storage/' . $product->image) }}" class="card-img-top" alt="{{ $product->name }}" style="height:180px;object-fit:cover;">
+                @else
+                    <div class="bg-light d-flex align-items-center justify-content-center" style="height:180px;">
+                        <span class="text-muted">Tidak ada gambar</span>
+                    </div>
+                @endif
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title fw-semibold">{{ $product->name }}</h5>
+                    <div class="mb-2 text-primary">Rp{{ number_format($product->price, 0, ',', '.') }}</div>
+                    <div class="mb-2">
+                        <span class="badge {{ $product->stock > 0 ? 'bg-success' : 'bg-danger' }}">
+                            {{ $product->stock > 0 ? $product->stock : 'Habis' }}
+                        </span>
+                        <span class="ms-2 text-secondary">{{ $product->category }}</span>
+                    </div>
+                    <div class="mt-auto">
+                        <a href="{{ route('admin.products.show', $product) }}" class="btn btn-sm btn-info shadow-sm me-1" title="Lihat">
                             <i class="bi bi-eye"></i>
                         </a>
-                        <a href="{{ route('admin.products.edit', $product) }}" class="btn btn-sm btn-warning shadow-sm" title="Edit">
+                        <a href="{{ route('admin.products.edit', $product) }}" class="btn btn-sm btn-warning shadow-sm me-1" title="Edit">
                             <i class="bi bi-pencil"></i>
                         </a>
                         <form action="{{ route('admin.products.destroy', $product) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin hapus produk ini?')">
@@ -92,15 +79,15 @@
                                 <i class="bi bi-trash"></i>
                             </button>
                         </form>
-                    </td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="7" class="text-center text-muted fst-italic py-4">Tidak ada produk ditemukan.</td>
-                </tr>
-                @endforelse
-            </tbody>
-        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @empty
+        <div class="col-12 text-center text-muted fst-italic py-4">
+            Tidak ada produk ditemukan.
+        </div>
+        @endforelse
     </div>
 
     <div class="mt-3 d-flex justify-content-center">
@@ -112,18 +99,21 @@
 @push('styles')
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <style>
-    /* Custom shadow and hover effect for table rows */
-    table.table-hover tbody tr:hover {
-        background-color: #e9f5ff;
-        transition: background-color 0.3s ease;
+    .card-img-top {
+        border-top-left-radius: 0.5rem;
+        border-top-right-radius: 0.5rem;
     }
-
-    /* Rounded buttons with subtle shadow */
+    .card {
+        border-radius: 0.5rem;
+        transition: box-shadow 0.2s;
+    }
+    .card:hover {
+        box-shadow: 0 6px 24px rgba(0,123,255,0.15);
+    }
     .btn {
         border-radius: 0.375rem;
-        transition: box-shadow 0.2s ease;
+        transition: box-shadow 0.2s;
     }
-
     .btn:hover {
         box-shadow: 0 4px 12px rgb(0 123 255 / 0.4);
     }
