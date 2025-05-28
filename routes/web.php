@@ -13,6 +13,8 @@ use App\Http\Controllers\Customer\ReviewController;
 use App\Http\Controllers\Customer\OrderController as CustomerOrderController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Customer\CartController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Customer\DashboardController as CustomerDashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,21 +29,6 @@ Route::get('/', function () {
 
 // Dashboard redirect by role
 Route::get('/dashboard', function () {
-    $user = auth()->user();
-
-    if ($user && $user->role === 'admin') {
-        return redirect()->route('admin.dashboard');
-    }
-    // Jika bukan admin (termasuk role tidak dikenal), arahkan ke dashboard customer
-    return redirect()->route('customer.dashboard');
-})->middleware('auth')->name('dashboard');
-
-// Static Views (optional, bisa disesuaikan dengan role atau dihapus jika tidak dipakai)
-Route::middleware('auth')->group(function () {
-    Route::view('/tables', 'tables')->name('tables');
-    Route::view('/wallet', 'wallet')->name('wallet');
-    Route::view('/RTL', 'RTL')->name('RTL');
-    Route::view('/profile', 'account-pages.profile')->name('profile');
 });
 
 // Auth Pages
