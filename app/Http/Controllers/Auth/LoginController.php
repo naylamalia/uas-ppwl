@@ -39,6 +39,8 @@ class LoginController extends Controller
 
             $user = Auth::user();
             // Check if the user has a role
+            /** @var \App\Models\User $user */
+            
             if ($user->hasRole('admin')) {
                 return redirect()->intended(route('admin.dashboard'));
             } else {
@@ -51,7 +53,6 @@ class LoginController extends Controller
         ])->withInput($request->only('email'));
     }
     
-
 
     /**
      * Remove the specified resource from storage.

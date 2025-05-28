@@ -25,13 +25,13 @@ class DashboardController extends Controller
             //->get();
 
         // Produk Populer (berdasarkan jumlah order terbanyak)
-        $popularProducts = Product::select('products.*')
-            ->leftJoin('order_details', 'products.id', '=', 'order_details.product_id')
-            ->selectRaw('count(order_details.id) as order_details_count')
-            ->groupBy('products.id')
-            ->orderByDesc('order_count')
-            ->limit(5)
-            ->get();
+        //$popularProducts = Product::select('products.*')
+            //->leftJoin('order_details', 'products.id', '=', 'order_details.product_id')
+            //->selectRaw('count(order_details.id) as order_details_count')
+            //->groupBy('products.id')
+            //->orderByDesc('order_details_count')
+            //->limit(5)
+            //->get();
 
         // Order Overview (jumlah order per status)
         $orderOverview = Order::select('status_order', DB::raw('count(*) as total'))
@@ -43,7 +43,7 @@ class DashboardController extends Controller
 
         return view('admin.dashboard', [
             // 'stock' => $stock,
-            'popularProducts' => $popularProducts,
+            //'popularProducts' => $popularProducts,
             'orderOverview' => $orderOverview,
             'userCount' => $userCount,
         ]);

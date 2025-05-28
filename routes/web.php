@@ -27,9 +27,16 @@ Route::get('/', function () {
     return redirect('/dashboard');
 })->middleware('auth');
 
-// Dashboard redirect by role
+// Redirect to dashboard based on role
 Route::get('/dashboard', function () {
-});
+    // Redirect ke dashboard sesuai role
+    $user = auth()->user();
+    if ($user && $user->role === 'admin') {
+        return redirect()->route('admin.dashboard');
+    }
+    // Jika bukan admin, arahkan ke dashboard customer
+    return redirect()->route('customer.dashboard');
+})->middleware('auth')->name('dashboard');;
 
 // Auth Pages
 Route::middleware('guest')->group(function () {
@@ -54,7 +61,7 @@ Route::post('/logout', [LoginController::class, 'destroy'])->middleware('auth')-
 
 // Admin routes - Tanpa pengecekan role di route
 Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
-    Route::view('/dashboard', 'admin.dashboard')->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::resource('products', ProductController::class);
     Route::get('/products/export/pdf', [ProductController::class, 'exportPdf'])->name('products.export.pdf');
@@ -75,7 +82,7 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
 
 // Customer routes - Tanpa pengecekan role di route
 Route::prefix('customer')->middleware('auth')->name('customer.')->group(function () {
-    Route::view('/dashboard', 'customer.dashboard')->name('dashboard');
+    Route::get('/dashboard', [CustomerDashboardController::class, 'index'])->name('dashboard');
 
     // Profile
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
