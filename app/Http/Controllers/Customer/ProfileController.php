@@ -15,7 +15,7 @@ class ProfileController extends Controller
         $user = User::find(Auth::id());
         $customer = Customer::where('user_id', Auth::id())->first();
 
-        return view('customer.profile.index', compact('user', 'customer'));
+        return view('customer.profile', compact('user', 'customer'));
     }
 
     public function update(Request $request)
