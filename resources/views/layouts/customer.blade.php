@@ -96,8 +96,8 @@
     {{-- Navbar --}}
     <nav class="navbar navbar-expand-lg navbar-blur shadow-sm py-3 sticky-top">
         <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="{{ route('customer.products.index') }}">
-                <i class="bi bi-gem me-2"></i> PinkStore
+            <a class="navbar-brand d-flex align-items-center" href="{{ route('customer.dashboard') }}">
+                <i class="bi bi-gem me-2"></i> PocketGrip
             </a>
             <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCustomer" aria-controls="navbarCustomer" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
