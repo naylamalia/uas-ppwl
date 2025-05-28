@@ -10,7 +10,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Customer\ProductController as CustomerProductController;
 use App\Http\Controllers\Customer\ReviewController;
-use App\Http\Controllers\Customer\OrderController;
+use App\Http\Controllers\Customer\OrderController as CustomerOrderController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Customer\CartController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -22,106 +22,86 @@ use App\Http\Controllers\Customer\DashboardController as CustomerDashboardContro
 |--------------------------------------------------------------------------
 */
 
+// Redirect root to dashboard
 Route::get('/', function () {
     return redirect('/dashboard');
 })->middleware('auth');
 
+// Dashboard redirect by role
 Route::get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard')->middleware('auth');
-
-Route::get('/tables', function () {
-    return view('tables');
-})->name('tables')->middleware('auth');
-
-Route::get('/wallet', function () {
-    return view('wallet');
-})->name('wallet')->middleware('auth');
-
-Route::get('/RTL', function () {
-    return view('RTL');
-})->name('RTL')->middleware('auth');
-
-Route::get('/profile', function () {
-    return view('account-pages.profile');
-})->name('profile')->middleware('auth');
-
-Route::get('/signin', function () {
-    return view('account-pages.signin');
-})->name('signin');
-
-Route::get('/signup', function () {
-    return view('account-pages.signup');
-})->name('signup')->middleware('guest');
-
-Route::get('/sign-up', [RegisterController::class, 'create'])
-    ->middleware('guest')
-    ->name('sign-up');
-Route::post('/sign-up', [RegisterController::class, 'store'])
-    ->middleware('guest');
-
-Route::get('/sign-in', [LoginController::class, 'create'])
-    ->middleware('guest')
-    ->name('sign-in');
-Route::post('/sign-in', [LoginController::class, 'store'])
-    ->middleware('guest');
-
-Route::post('/logout', [LoginController::class, 'destroy'])
-    ->middleware('auth')
-    ->name('logout');
-
-Route::get('/forgot-password', [ForgotPasswordController::class, 'create'])
-    ->middleware('guest')
-    ->name('password.request');
-Route::post('/forgot-password', [ForgotPasswordController::class, 'store'])
-    ->middleware('guest')
-    ->name('password.email');
-
-Route::get('/reset-password/{token}', [ResetPasswordController::class, 'create'])
-    ->middleware('guest')
-    ->name('password.reset');
-Route::post('/reset-password', [ResetPasswordController::class, 'store'])
-    ->middleware('guest');
-
-Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
-Route::get('/customer/dashboard', [CustomerDashboardController::class, 'index'])->name('customer.dashboard');
-    
-// User profile & management
-Route::get('/laravel-examples/user-profile', [ProfileController::class, 'index'])->name('users.profile')->middleware('auth');
-Route::put('/laravel-examples/user-profile/update', [ProfileController::class, 'update'])->name('users.update')->middleware('auth');
-Route::get('/laravel-examples/users-management', [UserController::class, 'index'])->name('users-management')->middleware('auth');
-
-// Produk untuk customer
-Route::middleware(['auth', 'customer'])->prefix('products')->name('customer.products.')->group(function () {
-    Route::get('/', [CustomerProductController::class, 'index'])->name('index');
-    Route::get('/{id}', [CustomerProductController::class, 'show'])->name('show');
-    Route::get('/{product}/reviews', [ReviewController::class, 'index'])->name('reviews.index');
-    Route::post('/{product}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
-    Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
 });
 
-// Cart (keranjang belanja) untuk customer
-Route::middleware(['auth', 'customer'])->prefix('cart')->name('cart.')->group(function () {
-    Route::get('/', [CartController::class, 'index'])->name('index');
-    Route::post('/add/{product}', [CartController::class, 'add'])->name('add');
-    Route::delete('/remove/{id}', [CartController::class, 'remove'])->name('remove');
+// Auth Pages
+Route::middleware('guest')->group(function () {
+    Route::view('/signin', 'account-pages.signin')->name('signin');
+    Route::view('/signup', 'account-pages.signup')->name('signup');
+
+    Route::get('/sign-up', [RegisterController::class, 'create'])->name('sign-up');
+    Route::post('/sign-up', [RegisterController::class, 'store']);
+
+    Route::get('/sign-in', [LoginController::class, 'create'])->name('sign-in');
+    Route::post('/sign-in', [LoginController::class, 'store']);
+
+    Route::get('/forgot-password', [ForgotPasswordController::class, 'create'])->name('password.request');
+    Route::post('/forgot-password', [ForgotPasswordController::class, 'store'])->name('password.email');
+
+    Route::get('/reset-password/{token}', [ResetPasswordController::class, 'create'])->name('password.reset');
+    Route::post('/reset-password', [ResetPasswordController::class, 'store']);
 });
 
-// Order untuk customer
-Route::middleware(['auth', 'customer'])->group(function () {
-    Route::get('/orders', [OrderController::class, 'index']);
-    Route::post('/orders', [OrderController::class, 'store']);
-    Route::get('/orders/{id}', [OrderController::class, 'show']);
-});
+// Logout
+Route::post('/logout', [LoginController::class, 'destroy'])->middleware('auth')->name('logout');
 
-// Untuk admin (middleware auth:admin)
+// Admin routes - Tanpa pengecekan role di route
 Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
+    Route::view('/dashboard', 'admin.dashboard')->name('dashboard');
+
     Route::resource('products', ProductController::class);
     Route::get('/products/export/pdf', [ProductController::class, 'exportPdf'])->name('products.export.pdf');
 
-    // Orders
-    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
-    Route::get('/orders/{id}', [AdminOrderController::class, 'show']);
-    Route::delete('/orders/{id}', [AdminOrderController::class, 'destroy']);
+    Route::get('/stock', [ProductController::class, 'stock'])->name('stock.index');
+    Route::get('/stock/{id}/add', [ProductController::class, 'showAddStockForm'])->name('stock.form');
+    Route::post('/stock/add/{id}', [ProductController::class, 'addStock'])->name('stock.add');
+
+    Route::get('/orders', [AdminOrderController::class, 'index'])->name('orders.index');
+    Route::get('/orders/{id}', [AdminOrderController::class, 'show'])->name('orders.show');
+    Route::delete('/orders/{id}', [AdminOrderController::class, 'destroy'])->name('orders.destroy');
     Route::get('/orders/export/pdf', [AdminOrderController::class, 'exportPdf'])->name('orders.export.pdf');
+
+    Route::get('/users-management', [UserController::class, 'index'])->name('users.management');
+    Route::get('/users', [UserController::class, 'index'])->name('users-management'); // Alias untuk kompatibilitas
+});
+
+// Customer routes - Tanpa pengecekan role di route
+Route::prefix('customer')->middleware('auth')->name('customer.')->group(function () {
+    Route::view('/dashboard', 'customer.dashboard')->name('dashboard');
+
+    // Profile
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+
+    // Produk
+    Route::prefix('products')->name('products.')->group(function () {
+        Route::get('/', [CustomerProductController::class, 'index'])->name('index');
+        Route::get('/{id}', [CustomerProductController::class, 'show'])->name('show');
+
+        // Reviews
+        Route::get('/{product}/reviews', [ReviewController::class, 'index'])->name('reviews.index');
+        Route::post('/{product}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+        Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
+    });
+
+    // Cart
+    Route::prefix('cart')->name('cart.')->group(function () {
+        Route::get('/', [CartController::class, 'index'])->name('index');
+        Route::post('/add/{product}', [CartController::class, 'add'])->name('add');
+        Route::delete('/remove/{id}', [CartController::class, 'remove'])->name('remove');
+    });
+
+    // Orders
+    Route::prefix('orders')->name('orders.')->group(function () {
+        Route::get('/', [CustomerOrderController::class, 'index'])->name('index');
+        Route::post('/', [CustomerOrderController::class, 'store'])->name('store');
+        Route::get('/{id}', [CustomerOrderController::class, 'show'])->name('show');
+    });
 });
