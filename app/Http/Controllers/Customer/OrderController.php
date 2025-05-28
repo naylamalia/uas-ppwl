@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -38,7 +39,15 @@ class OrderController extends Controller
             'pilihan_cod' => 'boolean',
         ]);
 
-        $product = \App\Models\Product::findOrFail($request->product_id);
+        $product = Product::findOrFail($request->product_id);
+
+        // Cek stok cukup
+        if ($product->stock < $request->quantity) {
+            return back()->with('error', 'Stok produk tidak mencukupi.');
+        }
+
+        // Kurangi stok
+        $product->decrement('stock', $request->quantity);
 
         $order = Order::create([
             'user_id' => Auth::id(),

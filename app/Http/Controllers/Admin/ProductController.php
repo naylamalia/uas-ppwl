@@ -149,4 +149,30 @@ class ProductController extends Controller
 
         return redirect()->route('admin.products.index')->with('success', 'Produk berhasil dihapus.');
     }
+
+    //function stock
+    public function stock()
+    {
+    $products = Product::orderBy('name')->paginate(10);
+    return view('admin.stock.index', compact('products'));
+    }
+
+    public function addStock(Request $request, $id)
+    {
+    $request->validate([
+        'jumlah_stok' => 'required|integer|min:1',
+    ]);
+    $product = Product::findOrFail($id);
+    $product->increment('stock', $request->jumlah_stok);
+
+    return back()->with('success', 'Stok produk berhasil ditambah.');
+    }
+
+    // Tampilkan form tambah stok untuk produk tertentu
+    public function showAddStockForm($id)
+    {
+    $product = Product::findOrFail($id);
+    return view('admin.stock.add', compact('product'));
+    }
+
 }
