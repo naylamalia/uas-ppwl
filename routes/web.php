@@ -27,17 +27,6 @@ Route::get('/', function () {
     return redirect('/dashboard');
 })->middleware('auth');
 
-// Redirect to dashboard based on role
-Route::get('/dashboard', function () {
-    // Redirect ke dashboard sesuai role
-    $user = auth()->user();
-    if ($user && $user->role === 'admin') {
-        return redirect()->route('admin.dashboard');
-    }
-    // Jika bukan admin, arahkan ke dashboard customer
-    return redirect()->route('customer.dashboard');
-})->middleware('auth')->name('dashboard');;
-
 // Auth Pages
 Route::middleware('guest')->group(function () {
     Route::view('/signin', 'account-pages.signin')->name('signin');

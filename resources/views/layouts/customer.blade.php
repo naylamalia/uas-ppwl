@@ -1,4 +1,3 @@
-{{-- filepath: c:\laragon\www\uas-ppwl\resources\views\layouts\customer.blade.php --}}
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -18,65 +17,87 @@
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #e3eaf5, #f7f9fc);
+            background: linear-gradient(135deg, #fceff9, #fff7fb);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            scroll-behavior: smooth;
+            color: #4b4b4b;
         }
+
         .navbar-blur {
-            background: rgba(30, 41, 59, 0.75) !important;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 182, 193, 0.75) !important;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 8px 20px rgba(255, 182, 193, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #090505;
+            letter-spacing: 1.2px;
+        }
+
+        .nav-link {
+            color: #fff;
+            padding: 0.5rem 1rem;
             transition: all 0.3s ease-in-out;
         }
-        .navbar-brand {
-            font-weight: 600;
-            font-size: 1.25rem;
-            letter-spacing: 1.5px;
+
+        .nav-link.active,
+        .nav-link:hover,
+        .nav-link:focus {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 0.75rem;
         }
-        .nav-link {
-            transition: all 0.2s ease-in-out;
-        }
-        .nav-link.active, .nav-link:hover, .nav-link:focus {
-            color: #0d6efd !important;
-            background-color: rgba(13, 110, 253, 0.1);
-            border-radius: 0.5rem;
-        }
+
         .dropdown-menu {
             border-radius: 1rem;
-            box-shadow: 0 1rem 2rem rgba(0,0,0,0.1);
-            animation: fadeIn 0.2s ease-in-out;
+            box-shadow: 0 1.5rem 2rem rgba(0,0,0,0.1);
+            animation: fadeIn 0.3s ease-in-out;
         }
+
         .avatar-customer {
-            width: 36px;
-            height: 36px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             object-fit: cover;
-            border: 2px solid rgba(13, 110, 253, 0.2);
+            border: 2px solid rgba(255, 192, 203, 0.5);
         }
+
         main {
-            padding-top: 2rem;
+            padding: 3rem 1rem;
         }
+
         footer {
-            background: #0f172a;
-            color: #fff;
+            background: linear-gradient(135deg, #ffb6c1, #ffc0cb);
+            color: white;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
             font-size: 0.9rem;
-            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background-color: #f472b6;
+            border-color: #f472b6;
+        }
+
+        .btn-primary:hover {
+            background-color: #ec4899;
+            border-color: #ec4899;
         }
 
         @keyframes fadeIn {
-            from {opacity: 0; transform: translateY(5px);}
+            from {opacity: 0; transform: translateY(8px);}
             to {opacity: 1; transform: translateY(0);}
         }
     </style>
 </head>
 <body>
     {{-- Navbar --}}
-    <nav class="navbar navbar-expand-lg navbar-blur shadow-sm py-2 sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-blur shadow-sm py-3 sticky-top">
         <div class="container">
-            <a class="navbar-brand text-white d-flex align-items-center" href="{{ route('customer.products.index') }}">
-                <i class="bi bi-bag-check-fill me-2"></i> UAS PPWL
+            <a class="navbar-brand d-flex align-items-center" href="{{ route('customer.products.index') }}">
+                <i class="bi bi-gem me-2"></i> PinkStore
             </a>
             <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCustomer" aria-controls="navbarCustomer" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -84,23 +105,23 @@
             <div class="collapse navbar-collapse" id="navbarCustomer">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center gap-lg-2">
                     <li class="nav-item">
-                        <a class="nav-link{{ request()->routeIs('customer.products.index') ? ' active' : '' }} text-white" href="{{ route('customer.products.index') }}">
+                        <a class="nav-link{{ request()->routeIs('customer.products.index') ? ' active' : '' }}" href="{{ route('customer.products.index') }}">
                             <i class="bi bi-box-seam me-1"></i> Produk
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link{{ request()->routeIs('cart.*') ? ' active' : '' }} text-white" href="{{ route('customer.cart.index') }}">
+                        <a class="nav-link{{ request()->routeIs('cart.*') ? ' active' : '' }}" href="{{ route('customer.cart.index') }}">
                             <i class="bi bi-cart me-1"></i> Keranjang
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link{{ request()->routeIs('customer.orders.index') ? ' active' : '' }} text-white" href="{{ route('customer.orders.index') }}">
+                        <a class="nav-link{{ request()->routeIs('customer.orders.index') ? ' active' : '' }}" href="{{ route('customer.orders.index') }}">
                             <i class="bi bi-receipt me-1"></i> Pesanan Saya
                         </a>
                     </li>
                     @auth
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle d-flex align-items-center text-white" href="#" id="navbarUser" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarUser" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="{{ asset('assets/img/team-2.jpg') }}" alt="avatar" class="avatar-customer me-2">
                             <span>{{ Auth::user()->name }}</span>
                         </a>
@@ -122,7 +143,7 @@
                     </li>
                     @else
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="{{ route('login') }}">
+                        <a class="nav-link" href="{{ route('login') }}">
                             <i class="bi bi-box-arrow-in-right me-1"></i> Login
                         </a>
                     </li>
@@ -137,7 +158,7 @@
     </main>
 
     <footer class="text-center py-4 mt-auto">
-        <small>&copy; {{ date('Y') }} UAS PPWL. All rights reserved.</small>
+        <small>&copy; {{ date('Y') }} PocketGrip by UAS PPWL. All rights reserved.</small>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
