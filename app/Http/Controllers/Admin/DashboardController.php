@@ -41,7 +41,7 @@ class DashboardController extends Controller
         // Jumlah User
         $userCount = User::count();
 
-        return view('admin.dashboard.index', [
+        return view('admin.dashboard', [
             // 'stock' => $stock,
             'popularProducts' => $popularProducts,
             'orderOverview' => $orderOverview,

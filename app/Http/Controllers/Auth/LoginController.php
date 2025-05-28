@@ -39,10 +39,10 @@ class LoginController extends Controller
 
             $user = Auth::user();
             // Check if the user has a role
-            if ($user->role === 'admin') {
-                return redirect()->intended('/admin/dashboard');
+            if ($user->hasRole('admin')) {
+                return redirect()->intended(route('admin.dashboard'));
             } else {
-                return redirect()->intended('/customer/dashboard');
+                return redirect()->intended(route('customer.dashboard'));
             }
         }
 

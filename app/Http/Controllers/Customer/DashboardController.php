@@ -34,7 +34,7 @@ class DashboardController extends Controller
                 ->get();
         }
 
-        return view('customer.dashboard.index', [
+        return view('customer.dashboard', [
             'latestProducts' => $latestProducts,
             'popularProducts' => $popularProducts,
             'searchResults' => $searchResults,
