@@ -70,6 +70,7 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
 
     Route::get('/users-management', [UserController::class, 'index'])->name('users.management');
     Route::get('/users', [UserController::class, 'index'])->name('users-management'); // Alias untuk kompatibilitas
+    Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
 });
 
 // Customer routes - Tanpa pengecekan role di route
