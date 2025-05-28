@@ -28,8 +28,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link position-relative ms-0 ps-2 py-2 {{ is_current_route('admin.users.index') ? 'active' : '' }}"
-                        href="{{ route('admin.users.index') }}">
+                    <a class="nav-link position-relative ms-0 ps-2 py-2 {{ is_current_route('users-management.index') ? 'active' : '' }}"
+                        href="{{ route('admin.users-management.index') }}">
                         <div class="icon icon-shape icon-sm px-0 text-center d-flex align-items-center justify-content-center">
                             <i class="bi bi-people" style="font-size:1.5rem;"></i>
                         </div>
