@@ -4,26 +4,29 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\StoreProductRequest;
-use App\Http\Requests\UpdateProductRequest;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ProductController extends Controller
 {
-    // Tampilkan semua produk
-    public function index($request)
+    // Tampilkan semua produk dengan filter dan pagination
+    public function index(Request $request)
     {
         $query = Product::query();
 
+        // Pencarian berdasarkan nama produk
         if ($request->filled('search')) {
-            $query->where('name', 'like', '%'. $request->search . '%');
+            $query->where('name', 'like', '%' . $request->search . '%');
         }
 
+        // Filter berdasarkan kategori
         if ($request->filled('category')) {
-        $query->where('category', $request->category);
+            $query->where('category', $request->category);
         }
 
+        // Filter berdasarkan rentang harga
         if ($request->filled('price')) {
             switch ($request->price) {
                 case '1':
@@ -41,9 +44,18 @@ class ProductController extends Controller
             }
         }
 
-        $products = Product::latest()->paginate(10)->withQueryString();
+        $products = $query->latest()->paginate(10)->withQueryString();
         $categories = Product::CATEGORIES;
+
         return view('admin.products.index', compact('products', 'categories'));
+    }
+
+    // Export data produk ke PDF
+    public function exportPdf()
+    {
+        $products = Product::latest()->get();
+        $pdf = Pdf::loadView('admin.products.report', compact('products'));
+        return $pdf->download('laporan-produk.pdf');
     }
 
     // Tampilkan form tambah produk
@@ -53,15 +65,25 @@ class ProductController extends Controller
         return view('admin.products.create', compact('categories'));
     }
 
-    // Simpan produk baru dengan StoreProductRequest
-    public function store(StoreProductRequest $request)
+    // Simpan produk baru dengan validasi manual dan upload gambar
+    public function store(Request $request)
     {
-        $data = $request->validated();
+        // Validasi input
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'category' => 'required|string|in:' . implode(',', Product::CATEGORIES),
+            'price' => 'required|numeric|min:0',
+            'description' => 'nullable|string',
+            'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,webp|max:2048',
+        ]);
+
+        $data = $request->only(['name', 'category', 'price', 'description']);
 
         // Buat kode produk otomatis
         $data['code'] = 'PRD-' . strtoupper(Str::random(6));
 
-        if ($request->hasFile('image')) {
+        // Upload gambar jika ada
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
             $data['image'] = $request->file('image')->store('products', 'public');
         }
 
@@ -77,7 +99,7 @@ class ProductController extends Controller
         return view('admin.products.show', compact('product'));
     }
 
-    // Form edit produk
+    // Tampilkan form edit produk
     public function edit($id)
     {
         $product = Product::findOrFail($id);
@@ -85,14 +107,24 @@ class ProductController extends Controller
         return view('admin.products.edit', compact('product', 'categories'));
     }
 
-    // Update produk dengan UpdateProductRequest
-    public function update(UpdateProductRequest $request, $id)
+    // Update produk dengan validasi manual dan upload gambar baru
+    public function update(Request $request, $id)
     {
         $product = Product::findOrFail($id);
 
-        $data = $request->validated();
+        // Validasi input
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'category' => 'required|string|in:' . implode(',', Product::CATEGORIES),
+            'price' => 'required|numeric|min:0',
+            'description' => 'nullable|string',
+            'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,webp|max:2048',
+        ]);
 
-        if ($request->hasFile('image')) {
+        $data = $request->only(['name', 'category', 'price', 'description']);
+
+        // Upload gambar baru dan hapus gambar lama jika ada
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
             if ($product->image) {
                 Storage::disk('public')->delete($product->image);
             }
@@ -101,10 +133,10 @@ class ProductController extends Controller
 
         $product->update($data);
 
-        return redirect()->route('admin.products.index')->with('success', 'Produk berhasil diupdate.');
+        return redirect()->route('admin.products.index')->with('success', 'Produk berhasil diperbarui.');
     }
 
-    // Hapus produk
+    // Hapus produk dan file gambarnya jika ada
     public function destroy($id)
     {
         $product = Product::findOrFail($id);

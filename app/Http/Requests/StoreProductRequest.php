@@ -14,7 +14,7 @@ class StoreProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'code' => 'required|string|unique:products,code|max:255',
+            // 'code' dihapus dari rules, karena diisi otomatis di controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
@@ -27,8 +27,7 @@ class StoreProductRequest extends FormRequest
     public function messages()
     {
         return [
-            'code.required' => 'Kode produk harus diisi.',
-            'code.unique' => 'Kode produk sudah digunakan.',
+            // 'code' messages dihapus
             'name.required' => 'Nama produk harus diisi.',
             'price.required' => 'Harga produk harus diisi.',
             'price.numeric' => 'Harga harus berupa angka.',

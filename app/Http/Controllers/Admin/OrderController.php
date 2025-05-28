@@ -4,38 +4,42 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
-use Illuminate\Http\JsonResponse;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    /**
-     * Tampilkan semua order dengan relasi user dan product.
-     */
-    public function index(): JsonResponse
+    public function index()
     {
-        $orders = Order::with(['user', 'product'])->latest()->get();
-
-        return response()->json($orders);
+        $orders = Order::with('user', 'product')->get();
+        return view('admin.orders.index', compact('orders'));
     }
 
-    /**
-     * Tampilkan detail order tertentu dengan relasi user dan product.
-     */
-    public function show(int $id): JsonResponse
+    public function exportPdf()
     {
-        $order = Order::with(['user', 'product'])->findOrFail($id);
+        $orders = Order::with('user', 'orderItems.product')->latest()->get();
 
-        return response()->json($order);
+        $pdf = Pdf::loadView('admin.orders.report', compact('orders'));
+        return $pdf->download('laporan-order.pdf');
     }
 
-    /**
-     * Hapus order berdasarkan ID.
-     */
-    public function destroy(int $id): JsonResponse
+    public function show($id)
     {
+        $order = Order::with('user', 'product')->findOrFail($id);
+        return view('admin.orders.show', compact('order'));
+    }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status_order' => 'required|in:selesai,belum_selesai',
+        ]);
+
         $order = Order::findOrFail($id);
-        $order->delete();
+        $order->status_order = $request->status_order;
+        $order->save();
 
-        return response()->json(['message' => 'Order berhasil dihapus.'], 200);
+        return redirect()->route('admin.orders.show', $order->id)
+                         ->with('success', 'Status order berhasil diperbarui');
     }
 }
