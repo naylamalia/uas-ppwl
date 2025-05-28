@@ -1,4 +1,3 @@
-<!-- filepath: resources/views/layouts/admin.blade.php -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,6 +20,49 @@
     <!-- CSS Files -->
     <link id="pagestyle" href="{{ asset('assets/css/corporate-ui-dashboard.css?v=1.0.0') }}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Custom Navy Theme Style -->
+    <style>
+        .bg-gradient-primary {
+            background: linear-gradient(195deg, #001f3f, #003366) !important;
+        }
+
+        .btn.bg-gradient-primary {
+            background: linear-gradient(195deg, #001f3f, #003366) !important;
+            border: none;
+        }
+
+        .btn-outline-dark {
+            color: #001f3f;
+            border-color: #001f3f;
+        }
+
+        .btn-outline-dark:hover {
+            background-color: #001f3f;
+            color: #fff;
+        }
+
+        .text-dark {
+            color: #001f3f !important;
+        }
+
+        .btn.bg-gradient-dark {
+            background: linear-gradient(195deg, #001f3f, #002a52) !important;
+        }
+
+        .fixed-plugin-button {
+            background-color: #001f3f !important;
+        }
+
+        .form-check-input:checked {
+            background-color: #001f3f;
+            border-color: #001f3f;
+        }
+
+        .badge.bg-gradient-primary {
+            background: linear-gradient(195deg, #001f3f, #003366) !important;
+        }
+    </style>
 </head>
 
 <body class="g-sidenav-show bg-gray-100">
@@ -96,7 +138,7 @@
                         aria-label="Star creativetimofficial/corporate-ui-dashboard on GitHub">Star</a>
                     <h6 class="mt-3">Thank you for sharing!</h6>
                     <a href="https://twitter.com/intent/tweet?text=Check%20Corporate%20UI%20Dashboard%20made%20by%20%40CreativeTim%20%26%20%40UPDIVISION%20%23webdesign%20%23dashboard%20%23bootstrap5%20%23laravel&amp;url=https%3A%2F%2Fwww.creative-tim.com%2Fproduct%2Fcorporate-ui-dashboard-laravel"
-                    class="btn btn-dark mb-0 me-2" target="_blank">
+                        class="btn btn-dark mb-0 me-2" target="_blank">
                         <i class="fab fa-twitter me-1" aria-hidden="true"></i> Tweet
                     </a>
                     <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.creative-tim.com/product/corporate-ui-dashboard-laravel"
