@@ -36,7 +36,7 @@ class CartController extends Controller
 
         Session::put('cart', $cart);
 
-        return redirect()->route('cart.index')->with('success', 'Produk berhasil ditambahkan ke keranjang.');
+        return redirect()->route('customer.cart.index')->with('success', 'Produk berhasil ditambahkan ke keranjang.');
     }
 
     // Hapus produk dari keranjang
@@ -49,6 +49,6 @@ class CartController extends Controller
             Session::put('cart', $cart);
         }
 
-        return redirect()->route('cart.index')->with('success', 'Produk berhasil dihapus dari keranjang.');
+        return redirect()->route('customer.cart.index')->with('success', 'Produk berhasil dihapus dari keranjang.');
     }
 }
