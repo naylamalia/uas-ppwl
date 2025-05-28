@@ -25,6 +25,7 @@ class DashboardController extends Controller
             ->limit(6)
             ->get();
 
+
         // Pencarian produk
         $searchResults = null;
         if ($request->has('q') && $request->q) {
