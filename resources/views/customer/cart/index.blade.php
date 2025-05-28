@@ -1,5 +1,6 @@
 {{-- filepath: c:\laragon\www\uas-ppwl\resources\views\Customer\cart\index.blade.php --}}
 @extends('layouts.customer')
+@section('title', 'Daftar Keranjang Belanja')
 
 @section('content')
 <div class="container py-4">
