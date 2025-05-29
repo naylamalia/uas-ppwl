@@ -11,13 +11,13 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $orders = Order::with('user', 'product')->get();
+        $orders = Order::with('user', 'orderItems.product')->get();
         return view('admin.orders.index', compact('orders'));
     }
 
     public function exportPdf()
     {
-        $orders = Order::with('user', 'orderItems.product')->latest()->get();
+        $orders = Order::with('user', 'product')->latest()->get();
         $pdf = Pdf::loadView('admin.orders.report', compact('orders'));
         return $pdf->download('laporan-order.pdf');
     }
@@ -36,33 +36,25 @@ class OrderController extends Controller
 
         $order = Order::with('product')->findOrFail($id);
         $oldStatus = $order->status_order;
-        $order->status_order = $request->status_order;
+        $newStatus = $request->status_order;
+
+        $order->status_order = $newStatus;
         $order->save();
 
-        // Responsif stok: jika order dibatalkan, stok produk dikembalikan
-        if ($oldStatus !== 'dibatalkan' && $request->status_order === 'dibatalkan') {
+        // Jika status berubah jadi dibatalkan dan sebelumnya bukan dibatalkan, kembalikan stok produk
+        if ($oldStatus !== 'dibatalkan' && $newStatus === 'dibatalkan') {
             if ($order->product && $order->quantity) {
                 $order->product->increment('stock', $order->quantity);
             }
-            if (method_exists($order, 'orderItems')) {
-                foreach ($order->orderItems as $item) {
-                    $item->product->increment('stock', $item->quantity);
-                }
-            }
         }
 
-        // Jika status diubah dari dibatalkan ke aktif, stok dikurangi lagi
-        if ($oldStatus === 'dibatalkan' && $request->status_order !== 'dibatalkan') {
+        // Jika status berubah dari dibatalkan ke status aktif (selesai/belum_selesai), kurangi stok produk
+        if ($oldStatus === 'dibatalkan' && $newStatus !== 'dibatalkan') {
             if ($order->product && $order->quantity) {
                 if ($order->product->stock >= $order->quantity) {
                     $order->product->decrement('stock', $order->quantity);
-                }
-            }
-            if (method_exists($order, 'orderItems')) {
-                foreach ($order->orderItems as $item) {
-                    if ($item->product->stock >= $item->quantity) {
-                        $item->product->decrement('stock', $item->quantity);
-                    }
+                } else {
+                    return redirect()->back()->with('error', 'Stok produk tidak cukup untuk mengubah status order.');
                 }
             }
         }

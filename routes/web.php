@@ -64,6 +64,8 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
     Route::delete('/orders/{id}', [AdminOrderController::class, 'destroy'])->name('orders.destroy');
     Route::get('/orders/export/pdf', [AdminOrderController::class, 'exportPdf'])->name('orders.export.pdf');
 
+    Route::match(['put', 'patch'],'/orders/{order}/status', [\App\Http\Controllers\Admin\OrderController::class, 'updateStatus'])->name('orders.updateStatus');
+
     Route::get('/users-management', [UserController::class, 'index'])->name('users.management');
     Route::get('/users', [UserController::class, 'index'])->name('users-management'); // Alias untuk kompatibilitas
     Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
