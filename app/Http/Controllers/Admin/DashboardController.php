@@ -16,36 +16,15 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        // Chart Stock In/Out (misal: ambil dari tabel stock_histories)
-       // $stock = DB::table('stock_histories')
-         //   ->selectRaw('DATE(created_at) as date, SUM(quantity) as total')
-           // ->groupBy('date')
-            //->orderBy('date', 'desc')
-            //->limit(7)
-            //->get();
-
-        // Produk Populer (berdasarkan jumlah order terbanyak)
-        //$popularProducts = Product::select('products.*')
-            //->leftJoin('order_details', 'products.id', '=', 'order_details.product_id')
-            //->selectRaw('count(order_details.id) as order_details_count')
-            //->groupBy('products.id')
-            //->orderByDesc('order_details_count')
-            //->limit(5)
-            //->get();
-
-        // Order Overview (jumlah order per status)
+        $totalRevenue = Order::sum('price');
+        $orderCount = Order::count();
+        $avgTransaction = Order::avg('price');
+        $recentOrders = Order::with(['product', 'user'])->latest()->limit(5)->get();
         $orderOverview = Order::select('status_order', DB::raw('count(*) as total'))
-            ->groupBy('status_order')
-            ->get();
+            ->groupBy('status_order')->get();
 
-        // Jumlah User
-        $userCount = User::count();
-
-        return view('admin.dashboard', [
-            // 'stock' => $stock,
-            //'popularProducts' => $popularProducts,
-            'orderOverview' => $orderOverview,
-            'userCount' => $userCount,
-        ]);
+        return view('admin.dashboard', compact(
+            'totalRevenue', 'orderCount', 'avgTransaction', 'recentOrders', 'orderOverview'
+        ));
     }
 }

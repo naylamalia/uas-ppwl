@@ -1,8 +1,40 @@
 {{-- filepath: c:\laragon\www\uas-ppwl\resources\views\components\app\sidebar.blade.php --}}
-<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 bg-slate-900 fixed-start " id="sidenav-main">
+<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 fixed-start"
+    id="sidenav-main"
+    style="background-color:firebrick">
+    <style>
+    /* Cegah perubahan warna saat hover dan aktif */
+    .nav-link {
+        color: white !important;
+        background-color: firebrick !important;
+    }
+
+    .nav-link:hover,
+    .nav-link:focus,
+    .nav-link:active {
+        color: white !important;
+        background-color: firebrick !important;
+        box-shadow: none !important;
+    }
+
+    .nav-link.active {
+        color: white !important;
+        background-color: firebrick !important;
+    }
+
+    /* Jika ingin ikon juga tidak berubah warna */
+    .nav-link i {
+        color: white !important;
+    }
+
+    .nav-link:hover i,
+    .nav-link.active i {
+        color: white !important;
+    }
+</style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <div class="sidenav-header">
-        <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
+        <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none "
             aria-hidden="true" id="iconSidenav"></i>
         <a class="navbar-brand d-flex align-items-center m-0"
             href="@if(auth()->check() && auth()->user()->hasRole('admin'))
@@ -12,7 +44,12 @@
                 @else
                     {{ route('dashboard') }}
                 @endif">
-            <span class="font-weight-bold text-lg">Corporate UI</span>
+            <span class="font-weight-bold text-lg d-flex align-items-center position-relative text-white">
+                PocketGear
+                <span style="position:relative; display:inline-block; width:1.8rem; height:1.8rem; margin-left:0.5rem;">
+                    <i class="bi bi-gear text-white" style="font-size:1.8rem; color:#212529; position:absolute; left:0; top:0;"></i>
+                </span>
+            </span>
         </a>
     </div>
     <div class="collapse navbar-collapse px-4  w-auto " id="sidenav-collapse-main">
@@ -97,7 +134,7 @@
             @endif
         </ul>
     </div>
-    <div class="sidenav-footer mx-4">
+    <div class="sidenav-footer mx-4 mt-auto ">
         <form method="POST" action="{{ route('logout') }}" id="logout-form">
             @csrf
             <button type="button"
