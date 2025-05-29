@@ -23,9 +23,14 @@ use App\Http\Controllers\Customer\DashboardController as CustomerDashboardContro
 */
 
 // Redirect root to dashboard
-Route::get('/', function () {
-    return redirect('/dashboard');
-})->middleware('auth');
+Route::get('/dashboard', function () {
+    $user = auth()->user();
+    if ($user && $user->role === 'admin') {
+        return redirect()->route('admin.dashboard');
+    }
+    // Default ke customer jika bukan admin
+    return redirect()->route('customer.dashboard');
+})->middleware('auth')->name('dashboard');
 
 // Auth Pages
 Route::middleware('guest')->group(function () {
