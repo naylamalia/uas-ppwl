@@ -73,11 +73,12 @@ class ProductController extends Controller
             'name' => 'required|string|max:255',
             'category' => 'required|string|in:' . implode(',', Product::CATEGORIES),
             'price' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:0', // tambahkan validasi stock
             'description' => 'nullable|string',
             'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,webp|max:2048',
         ]);
 
-        $data = $request->only(['name', 'category', 'price', 'description']);
+        $data = $request->only(['name', 'category', 'price', 'stock', 'description']); // tambahkan 'stock'
 
         // Buat kode produk otomatis
         $data['code'] = 'PRD-' . strtoupper(Str::random(6));
@@ -117,16 +118,17 @@ class ProductController extends Controller
             'name' => 'required|string|max:255',
             'category' => 'required|string|in:' . implode(',', Product::CATEGORIES),
             'price' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:0', // tambahkan validasi stock
             'description' => 'nullable|string',
             'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,webp|max:2048',
         ]);
 
-        $data = $request->only(['name', 'category', 'price', 'description']);
+        $data = $request->only(['name', 'category', 'price', 'stock', 'description']); // tambahkan 'stock'
 
         // Upload gambar baru dan hapus gambar lama jika ada
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
             if ($product->image) {
-                Storage::disk('public')->delete($product->image);
+                \Storage::disk('public')->delete($product->image);
             }
             $data['image'] = $request->file('image')->store('products', 'public');
         }

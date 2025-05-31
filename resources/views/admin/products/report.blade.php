@@ -12,7 +12,7 @@
         h2 {
             text-align: center;
             margin-bottom: 20px;
-            color: #007bff;
+            color: firebrick;
         }
         table {
             width: 100%;
@@ -26,21 +26,21 @@
             text-align: center;
         }
         th {
-            background-color: #007bff;
+            background-color: firebrick;
             color: white;
         }
         .text-success {
-            color: green;
+            color: forestgreen;
             font-weight: bold;
         }
         .badge-success {
-            background-color: green;
+            background-color: forestgreen;
             color: white;
             padding: 3px 6px;
             border-radius: 4px;
         }
         .badge-danger {
-            background-color: red;
+            background-color: firebrick;
             color: white;
             padding: 3px 6px;
             border-radius: 4px;

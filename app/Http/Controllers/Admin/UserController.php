@@ -45,7 +45,7 @@ class UserController extends Controller
         // Assign role via Spatie
         $user->assignRole($request->role);
 
-        return redirect()->route('admin.users-management.index')->with('success', 'New member added successfully.');
+        return redirect()->route('admin.users-management.index')->with('success', 'Pengguna berhasil ditambahkan.');
     }
 
     public function edit($id)
@@ -80,7 +80,7 @@ class UserController extends Controller
         // Sync role
         $user->syncRoles([$request->role]);
 
-        return redirect()->route('admin.users-management.index')->with('success', 'User berhasil diupdate.');
+        return redirect()->route('admin.users-management.index')->with('success', 'Pengguna berhasil diupdate.');
     }
 
     public function destroy($id)
