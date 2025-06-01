@@ -5,7 +5,8 @@
 @section('content')
 <div class="container mt-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="fw-bold" style="color:firebrick;">Daftar Produk</h2>
+        <h2 class="fw-bold" style="color:firebrick; display:flex; align-items:center; gap:8px;">
+             <i class="bi bi-box-seam"></i>Daftar Produk</h2>
         <div>
             <a href="{{ route('admin.products.export.pdf') }}" class="btn" style="background:forestgreen; color:white;" title="Export PDF">
                 <i class="bi bi-file-earmark-pdf"></i> Export PDF

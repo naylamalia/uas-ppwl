@@ -5,12 +5,9 @@
 @section('content')
 <div class="container mt-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="fw-bold" style="color: firebrick;">
-            <i class="bi bi-box-seam me-2"></i>Daftar Stok Produk
+        <h2 class="fw-bold" style="color:firebrick; display:flex; align-items:center; gap:8px;">
+            <i class="bi bi-archive"></i>Daftar Stok Produk
         </h2>
-        <a href="{{ route('admin.products.create') }}" class="btn btn-danger btn-sm shadow-sm">
-            <i class="bi bi-plus-lg me-1"></i> Tambah Produk
-        </a>
     </div>
 
     {{-- Flash message --}}
@@ -48,7 +45,7 @@
                     <td class="text-muted">{{ $product->category }}</td>
                     <td class="text-center">
                         @if($product->stock > 0)
-                            <span class="badge text-white rounded-pill px-3 py-2 fs-6" style="background-color: firebrick;">
+                            <span class="badge rounded-pill px-3 py-2 fs-6" style="background:#ffb3b3; color:firebrick;">
                                 {{ $product->stock }}
                             </span>
                         @else
@@ -57,7 +54,7 @@
                             </span>
                         @endif
                     </td>
-                    <td class="text-end fw-semibold text-success">
+                    <td class="text-end fw-bold text-success text-center">
                         Rp{{ number_format($product->price, 0, ',', '.') }}
                     </td>
                     <td class="text-center">

@@ -22,7 +22,12 @@ use App\Http\Controllers\Customer\DashboardController as CustomerDashboardContro
 |--------------------------------------------------------------------------
 */
 
-// Redirect root to dashboard
+// Redirect root to sign-in
+Route::get('/', function () {
+    return redirect()->route('sign-in');
+});
+
+// dashboard
 Route::get('/dashboard', function () {
     $user = auth()->user();
     if ($user && $user->role === 'admin') {

@@ -4,10 +4,52 @@
     <meta charset="utf-8">
     <title>Laporan Order</title>
     <style>
-        body { font-family: sans-serif; font-size: 12px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #333; padding: 6px 8px; text-align: left; }
-        th { background: #eee; }
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            margin: 20px;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: firebrick;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #999;
+        }
+        th, td {
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: firebrick;
+            color: white;
+        }
+        .badge-success {
+            background-color: forestgreen;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .badge-warning {
+            background-color: #f59e42;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .badge-danger {
+            background-color: firebrick;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -27,9 +69,20 @@
             <tr>
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $order->user->name ?? '-' }}</td>
-                <td>{{ $order->created_at->format('d-m-Y') }}</td>
-                <td>{{ ucfirst($order->status_order) }}</td>
-                <td>Rp{{ number_format($order->total, 0, ',', '.') }}</td>
+                <td>{{ $order->created_at ? $order->created_at->format('d-m-Y') : '-' }}</td>
+                <td>
+                    @php
+                        $status = $order->status_order;
+                        $badgeClass = match($status) {
+                            'belum_selesai' => 'badge-warning',
+                            'selesai' => 'badge-success',
+                            'dibatalkan', 'batal' => 'badge-danger',
+                            default => 'badge-danger',
+                        };
+                    @endphp
+                    <span class="{{ $badgeClass }}">{{ ucfirst(str_replace('_', ' ', $status)) }}</span>
+                </td>
+                <td>Rp{{ number_format($order->price, 0, ',', '.') }}</td>
             </tr>
             @endforeach
         </tbody>
