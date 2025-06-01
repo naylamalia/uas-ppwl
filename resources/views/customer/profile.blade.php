@@ -3,7 +3,7 @@
 
 @section('content')
 <div class="container py-4">
-    <h2 class="mb-4 fw-bold text-pink"><i class="bi bi-person-circle"></i> Profil Saya</h2>
+    <h2 class="mb-4 fw-bold text-firebrick"><i class="bi bi-person-circle"></i> Profil Saya</h2>
 
     @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -20,7 +20,7 @@
                         @csrf
                         @method('PUT')
                         <div class="mb-3 text-center">
-                            <i class="bi bi-person-circle fs-1 text-pink"></i>
+                            <i class="bi bi-person-circle fs-1 text-firebrick"></i>
                         </div>
                         <div class="mb-3">
                             <label for="name" class="form-label">Nama Lengkap</label>
@@ -59,7 +59,7 @@
                             </select>
                         </div>
                         <div class="d-grid">
-                            <button type="submit" class="btn btn-pink">
+                            <button type="submit" class="btn btn-firebrick">
                                 <i class="bi bi-save"></i> Simpan Perubahan
                             </button>
                         </div>
@@ -73,18 +73,18 @@
 
 @push('styles')
 <style>
-.text-pink {
-    color: #ed5aba !important;
+.text-firebrick {
+    color: firebrick !important;
 }
-.btn-pink {
-    border-color: #ed5aba !important;
+.btn-firebrick {
+    border-color: firebrick !important;
     color: #fff !important;
-    background: #ed5aba !important;
+    background: firebrick !important;
 }
-.btn-pink:hover, .btn-pink:focus {
-    background: #e35dd2 !important;
+.btn-firebrick:hover, .btn-firebrick:focus {
+    background: #b22222 !important;
     color: #fff !important;
-    border-color: #e35dd2 !important;
+    border-color: #b22222 !important;
 }
 </style>
 @endpush

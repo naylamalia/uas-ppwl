@@ -17,7 +17,7 @@
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #fceff9, #fff7fb);
+            background: #fff;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -25,21 +25,20 @@
         }
 
         .navbar-blur {
-            background: rgba(255, 182, 193, 0.75) !important;
-            backdrop-filter: blur(12px);
-            box-shadow: 0 8px 20px rgba(255, 182, 193, 0.3);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            background: #fff !important;
+            border-bottom: 1px solid firebrick;
+            box-shadow: 0 8px 20px rgba(178, 34, 34, 0.08);
         }
 
         .navbar-brand {
             font-weight: 700;
             font-size: 1.5rem;
-            color: #090505;
+            color: firebrick;
             letter-spacing: 1.2px;
         }
 
         .nav-link {
-            color: #fff;
+            color: firebrick;
             padding: 0.5rem 1rem;
             transition: all 0.3s ease-in-out;
         }
@@ -47,8 +46,9 @@
         .nav-link.active,
         .nav-link:hover,
         .nav-link:focus {
-            background-color: rgba(255, 255, 255, 0.2);
+            background-color: rgba(178, 34, 34, 0.08);
             border-radius: 0.75rem;
+            color: firebrick;
         }
 
         .dropdown-menu {
@@ -62,7 +62,7 @@
             height: 40px;
             border-radius: 50%;
             object-fit: cover;
-            border: 2px solid rgba(255, 192, 203, 0.5);
+            border: 2px solid firebrick;
         }
 
         main {
@@ -70,20 +70,53 @@
         }
 
         footer {
-            background: linear-gradient(135deg, #ffb6c1, #ffc0cb);
-            color: white;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            background: #fff;
+            color: firebrick;
+            text-shadow: none;
             font-size: 0.9rem;
+            border-top: 1px solid firebrick;
         }
 
-        .btn-primary {
-            background-color: #f472b6;
-            border-color: #f472b6;
+        .btn-primary,
+        .btn-outline-primary,
+        .btn-outline-danger,
+        .btn-outline-secondary {
+            border-color: firebrick !important;
+            color: firebrick !important;
+            background: #fff !important;
         }
 
-        .btn-primary:hover {
-            background-color: #ec4899;
-            border-color: #ec4899;
+        .btn-primary:hover,
+        .btn-outline-primary:hover,
+        .btn-outline-danger:hover,
+        .btn-outline-secondary:hover {
+            background: firebrick !important;
+            color: #fff !important;
+        }
+
+        .card, .card-body {
+            background: #fff !important;
+        }
+
+        .card-header, .border-bottom {
+            background: #fff !important;
+            border-color: firebrick !important;
+        }
+
+        .card-header h5, .fw-bold, .text-dark, .card-header, .fs-4, .font-weight-bold {
+            color: firebrick !important;
+        }
+
+        .list-group-item {
+            background: #fff !important;
+        }
+
+        .border, .card.border {
+            border-color: firebrick !important;
+        }
+
+        .table th, .table td {
+            color: firebrick !important;
         }
 
         @keyframes fadeIn {
@@ -99,7 +132,7 @@
             <a class="navbar-brand d-flex align-items-center" href="{{ route('customer.dashboard') }}">
                 <i class="bi bi-gem me-2"></i> PocketGrip
             </a>
-            <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCustomer" aria-controls="navbarCustomer" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCustomer" aria-controls="navbarCustomer" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarCustomer">

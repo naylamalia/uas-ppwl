@@ -4,7 +4,7 @@
 @section('content')
 <div class="container py-4">
     <div class="mb-4">
-        <a href="{{ route('customer.orders.index') }}" class="btn btn-outline-pink rounded-pill shadow-sm" style="border-color:#ed5aba; color:#ed5aba;">
+        <a href="{{ route('customer.orders.index') }}" class="btn btn-outline-firebrick rounded-pill shadow-sm">
             <i class="bi bi-arrow-left"></i> Kembali ke Daftar Pesanan
         </a>
     </div>
@@ -128,19 +128,19 @@
         letter-spacing: .5px;
     }
     .bg-primary {
-        background: #ed5aba !important;
+        background: firebrick !important;
     }
     .text-primary {
-        color: #e35dd2 !important;
+        color: firebrick !important;
     }
     .btn-outline-pink {
-        border-color: #ed5aba !important;
-        color: #ed5aba !important;
+        border-color: firebrick !important;
+        color: firebrick !important;
     }
     .btn-outline-pink:hover, .btn-outline-pink:focus {
-        background: #ed5aba !important;
+        background: firebrick !important;
         color: #fff !important;
-        border-color: #ed5aba !important;
+        border-color: firebrick !important;
     }
 </style>
 @endpush
