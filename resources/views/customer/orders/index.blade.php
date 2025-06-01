@@ -1,6 +1,8 @@
 {{-- filepath: c:\laragon\www\uas-ppwl\resources\views\Customer\orders\index.blade.php --}}
 @extends('layouts.customer')
 
+@section('title', 'Daftar Pesanan')
+
 @section('content')
 <div class="container py-4">
     <h2 class="mb-4 fw-bold text-firebrick"><i class="bi bi-receipt"></i> Riwayat Pesanan Saya</h2>
@@ -25,7 +27,10 @@
                             <div>
                                 <div class="fw-semibold fs-5 mb-1 text-firebrick">{{ $order->product->name ?? '-' }}</div>
                                 <div class="small text-muted mb-1">x{{ $order->quantity ?? 1 }}</div>
-                                <div class="small text-muted"><i class="bi bi-calendar"></i> {{ $order->created_at->format('d M Y H:i') }}</div>
+                                <div class="small text-muted">
+                                    <i class="bi bi-calendar"></i>
+                                    {{ $order->created_at ? $order->created_at->format('d M Y H:i') : '-' }}
+                                </div>
                             </div>
                         </div>
                         <div class="text-end flex-shrink-0 ms-3" style="min-width:150px;">

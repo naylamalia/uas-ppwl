@@ -69,7 +69,7 @@
                         </span>
                         <span class="ms-2 text-secondary">{{ $product->category }}</span>
                     </div>
-                    <div class="mt-auto">
+                    <div class="mt-auto justify-content-center d-flex gap-2">
                         <a href="{{ route('admin.products.show', $product) }}" class="btn btn-sm" style="background:#ffb3b3; color:firebrick;" title="Lihat">
                             <i class="bi bi-eye" style="font-size:1.1em; vertical-align:middle;"></i>
                         </a>

@@ -1,5 +1,7 @@
 @extends('layouts.admin')
 
+@section('title', 'Daftar Order')
+
 @section('content')
 <div class="container py-5">
     <h2 class="mb-4 fw-bold" style="color:firebrick; display:flex; align-items:center; gap:8px;">
@@ -18,7 +20,7 @@
                 <a href="{{ route('admin.orders.export.pdf') }}" 
                    class="btn btn-sm" style="background:forestgreen; color:white;"
                    data-bs-toggle="tooltip" data-bs-placement="left" title="Unduh laporan PDF semua order">
-                    <i class="bi bi-file-earmark-pdf"></i> Download PDF
+                    <i class="bi bi-file-earmark-pdf" style="font-size:1rem;"></i> Download PDF
                 </a>
             </div>
         </div>
@@ -28,9 +30,9 @@
                 <table class="table align-middle mb-0 table-hover">
                     <thead style="background:firebrick; color:white; border-color:firebrick; opacity:0.85;">
                         <tr>
-                            <th style="width:5%; color:white;">No</th>
-                            <th style="width:20%; color:white;">Pelanggan</th>
-                            <th style="width:30%; color:white;">Produk</th>
+                            <th style="width:5%; color:white;" class="text-center">No</th>
+                            <th style="width:20%; color:white;" class="text-center">Pelanggan</th>
+                            <th style="width:30%; color:white;" class="text-center">Produk</th>
                             <th style="width:8%; color:white;" class="text-center">Jumlah</th>
                             <th style="width:12%; color:white;" class="text-center">Status</th>
                             <th style="width:15%; color:white;" class="text-center">Tanggal</th>
@@ -39,12 +41,12 @@
                     </thead>
                     <tbody>
                         @forelse($orders as $order)
-                        <tr class="align-middle">
+                        <tr class="align-middle text-center">
                             <td>{{ $loop->iteration }}</td>
                             <td class="fw-semibold text-truncate" style="max-width: 150px;" title="{{ $order->user->name ?? '-' }}">
                                 {{ $order->user->name ?? '-' }}
                             </td>
-                            <td style="max-width: 350px;">
+                            <td style="max-width: 350px;" class="text-center">
                                 @if(isset($order->product))
                                     <span class="text-truncate d-block" title="{{ $order->product->name }}">{{ $order->product->name }}</span>
                                 @elseif(isset($order->orderItems) && count($order->orderItems))
@@ -85,7 +87,7 @@
                                     $icon = $statusIcons[$status] ?? 'bi-info-circle';
                                 @endphp
                                 <span
-                                    class="badge shadow-sm d-flex align-items-center gap-1 px-3 py-2"
+                                    class="badge shadow-sm d-flex align-items-center gap-1 px-3 py-2 p-1 m-1"
                                     style="
                                         background: {{ $status == 'belum_selesai' ? 'rgba(245,158,66,0.12)' : ($status == 'selesai' ? 'rgba(34,197,94,0.12)' : ($status == 'batal' || $status == 'dibatalkan' ? 'rgba(220,53,69,0.12)' : 'rgba(108,117,125,0.12)')) }};
                                         border: 2px solid
@@ -105,9 +107,9 @@
                             </td>
                             <td>
                                 <a href="{{ route('admin.orders.show', $order->id) }}" 
-                                   class="btn btn-sm" style="background:firebrick; color:white;"
+                                   class="btn btn-sm d-flex align-items-center justify-content-center p-2 m-2" style="background:firebrick; color:white;"
                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Lihat detail order">
-                                    <i class="bi bi-eye"></i>
+                                    <i class="bi bi-eye" style="font-size:1rem;"></i>
                                 </a>
                             </td>
                         </tr>

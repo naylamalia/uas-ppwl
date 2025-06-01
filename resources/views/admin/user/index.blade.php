@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Manajemen User')
+@section('title', 'Kelola Pengguna')
 
 @section('content')
 <div class="container py-4">
@@ -13,7 +13,7 @@
 
     <div class="mb-3">
         <a href="{{ route('admin.users-management.create') }}" class="btn" style="background:forestgreen; color:white;">
-            <i class="bi bi-plus" style="font-size:1.1em; vertical-align:middle;"></i> Tambah User
+            <i class="bi bi-plus" style="font-size:1.2rem; vertical-align:middle;"></i> Tambah User
         </a>
     </div>
 
@@ -23,20 +23,20 @@
                 <table class="table table-hover align-middle mb-0">
                     <thead style="background:firebrick;">
                         <tr>
-                            <th style="color:white;">#</th>
-                            <th style="color:white;">Nama</th>
-                            <th style="color:white;">Email</th>
-                            <th style="color:white;">Role</th>
-                            <th style="color:white;">Aksi</th>
+                            <th style="color:white;" class="text-center">#</th>
+                            <th style="color:white;" class="text-center">Nama</th>
+                            <th style="color:white;" class="text-center">Email</th>
+                            <th style="color:white;" class="text-center">Role</th>
+                            <th style="color:white;" class="text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse($users as $user)
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $user->name }}</td>
-                                <td>{{ $user->email }}</td>
-                                <td>
+                                <td class="text-center">{{ $loop->iteration }}</td>
+                                <td class="text-center">{{ $user->name }}</td>
+                                <td class="text-center">{{ $user->email }}</td>
+                                <td class="text-center">
                                     @foreach($user->roles as $role)
                                         @if($role->name === 'admin')
                                             <span class="badge" style="background:firebrick; color:white;">{{ ucfirst($role->name) }}</span>
@@ -47,16 +47,16 @@
                                         @endif
                                     @endforeach
                                 </td>
-                                <td>
-                                    <a href="{{ route('admin.users-management.edit', $user->id) }}" class="btn btn-sm" style="background:chocolate; color:white;">
-                                        <i class="bi bi-pencil" style="font-size:1.1em; vertical-align:middle;"></i> Edit
+                                <td class="text-center">
+                                    <a href="{{ route('admin.users-management.edit', $user->id) }}" class="btn btn-sm p-2 m-2" style="background:chocolate; color:white;">
+                                        <i class="bi bi-pencil" style="font-size:1.1rem; vertical-align:middle;"></i> Edit
                                     </a>
                                     <button type="button"
-                                        class="btn btn-sm btn-delete-user"
+                                        class="btn btn-sm btn-delete-user p-2 m-2"
                                         style="background:firebrick; color:white;"
                                         data-user-id="{{ $user->id }}"
                                         data-user-name="{{ $user->name }}">
-                                        <i class="bi bi-trash" style="font-size:1.1em; vertical-align:middle;"></i> Hapus
+                                        <i class="bi bi-trash" style="font-size:1.1rem; vertical-align:middle;"></i> Hapus
                                     </button>
                                     <form id="delete-form-{{ $user->id }}" action="{{ route('admin.users-management.destroy', $user->id) }}" method="POST" style="display:none;">
                                         @csrf

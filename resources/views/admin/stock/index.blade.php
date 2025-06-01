@@ -28,9 +28,9 @@
             <thead style="background-color: firebrick;" class="text-white text-center">
                 <tr>
                     <th style="width: 5%;">#</th>
-                    <th style="width: 15%;">Kode Produk</th>
-                    <th>Nama Produk</th>
-                    <th>Kategori</th>
+                    <th style="width: 15%;" class="text-center">Kode Produk</th>
+                    <th class="text-center">Nama Produk</th>
+                    <th class="text-center">Kategori</th>
                     <th style="width: 10%;">Stok</th>
                     <th style="width: 15%;">Harga</th>
                     <th style="width: 12%;">Aksi</th>
@@ -41,8 +41,8 @@
                 <tr class="align-middle">
                     <td class="text-center text-secondary">{{ $loop->iteration + ($products->firstItem() - 1) }}</td>
                     <td class="text-uppercase text-center fw-semibold">{{ $product->code }}</td>
-                    <td class="fw-semibold">{{ $product->name }}</td>
-                    <td class="text-muted">{{ $product->category }}</td>
+                    <td class="fw-semibold text-center">{{ $product->name }}</td>
+                    <td class="text-muted text-center">{{ $product->category }}</td>
                     <td class="text-center">
                         @if($product->stock > 0)
                             <span class="badge rounded-pill px-3 py-2 fs-6" style="background:#ffb3b3; color:firebrick;">
@@ -59,7 +59,7 @@
                     </td>
                     <td class="text-center">
                         <a href="{{ route('admin.stock.form', $product->id) }}" 
-                           class="btn btn-outline-danger btn-sm shadow-sm px-3">
+                           class="btn btn-outline-danger btn-sm shadow-sm px-3 p-2 m-2">
                             <i class="bi bi-plus-circle me-1"></i>Tambah Stok
                         </a>
                     </td>
@@ -76,7 +76,7 @@
         </table>
     </div>
 
-    <div class="mt-4 d-flex justify-content-center">
+    <div class="mt-4 d-flex justify-content-center text-center">
         {{ $products->links() }}
     </div>
 </div>
