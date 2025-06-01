@@ -5,10 +5,10 @@
 @section('content')
 <div class="container mt-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="fw-bold text-primary">
+        <h2 class="fw-bold" style="color: firebrick;">
             <i class="bi bi-box-seam me-2"></i>Daftar Stok Produk
         </h2>
-        <a href="{{ route('admin.products.create') }}" class="btn btn-primary btn-sm shadow-sm">
+        <a href="{{ route('admin.products.create') }}" class="btn btn-danger btn-sm shadow-sm">
             <i class="bi bi-plus-lg me-1"></i> Tambah Produk
         </a>
     </div>
@@ -28,7 +28,7 @@
 
     <div class="table-responsive shadow rounded-4 overflow-hidden border">
         <table class="table table-hover align-middle mb-0">
-            <thead class="bg-primary text-white text-center">
+            <thead style="background-color: firebrick;" class="text-white text-center">
                 <tr>
                     <th style="width: 5%;">#</th>
                     <th style="width: 15%;">Kode Produk</th>
@@ -47,12 +47,14 @@
                     <td class="fw-semibold">{{ $product->name }}</td>
                     <td class="text-muted">{{ $product->category }}</td>
                     <td class="text-center">
-                        @if($product->stock > 10)
-                            <span class="badge rounded-pill bg-success px-3 py-2 fs-6">{{ $product->stock }}</span>
-                        @elseif($product->stock > 0)
-                            <span class="badge rounded-pill bg-warning text-dark px-3 py-2 fs-6">{{ $product->stock }}</span>
+                        @if($product->stock > 0)
+                            <span class="badge text-white rounded-pill px-3 py-2 fs-6" style="background-color: firebrick;">
+                                {{ $product->stock }}
+                            </span>
                         @else
-                            <span class="badge rounded-pill bg-danger px-3 py-2 fs-6">Habis</span>
+                            <span class="badge text-white rounded-pill px-3 py-2 fs-6" style="background-color: #555;">
+                                Habis
+                            </span>
                         @endif
                     </td>
                     <td class="text-end fw-semibold text-success">
@@ -60,7 +62,7 @@
                     </td>
                     <td class="text-center">
                         <a href="{{ route('admin.stock.form', $product->id) }}" 
-                           class="btn btn-outline-primary btn-sm shadow-sm px-3">
+                           class="btn btn-outline-danger btn-sm shadow-sm px-3">
                             <i class="bi bi-plus-circle me-1"></i>Tambah Stok
                         </a>
                     </td>
