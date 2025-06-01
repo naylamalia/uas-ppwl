@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>
-        @yield('title', 'Admin Panel') - Corporate UI by Creative Tim & UPDIVISION
+        @yield('title', 'Admin Panel')
     </title>
     <!--     Fonts and icons     -->
     <link

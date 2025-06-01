@@ -97,7 +97,7 @@
     <nav class="navbar navbar-expand-lg navbar-blur shadow-sm py-3 sticky-top">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="{{ route('customer.dashboard') }}">
-                <i class="bi bi-gem me-2"></i> PocketGrip
+                <i class="bi bi-gem me-2"></i> PocketGear
             </a>
             <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCustomer" aria-controls="navbarCustomer" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -158,7 +158,7 @@
     </main>
 
     <footer class="text-center py-4 mt-auto">
-        <small>&copy; {{ date('Y') }} PocketGrip by UAS PPWL. All rights reserved.</small>
+        <small>&copy; {{ date('Y') }} PocketGear by UAS PPWL. All rights reserved.</small>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

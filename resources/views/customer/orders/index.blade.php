@@ -1,6 +1,8 @@
 {{-- filepath: c:\laragon\www\uas-ppwl\resources\views\Customer\orders\index.blade.php --}}
 @extends('layouts.customer')
 
+@section('title', 'Daftar Pesanan')
+
 @section('content')
 <div class="container py-4">
     <h2 class="mb-4 fw-bold text-pink"><i class="bi bi-receipt"></i> Riwayat Pesanan Saya</h2>
