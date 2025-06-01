@@ -107,6 +107,8 @@ Route::prefix('customer')->middleware('auth')->name('customer.')->group(function
         Route::get('/', [CartController::class, 'index'])->name('index');
         Route::post('/add/{product}', [CartController::class, 'add'])->name('add');
         Route::delete('/remove/{id}', [CartController::class, 'remove'])->name('remove');
+        Route::post('/checkout', [CartController::class, 'checkout'])->name('checkout');
+        Route::post('/checkout/confirm', [CartController::class, 'confirmCheckout'])->name('checkout.confirm');
     });
 
     // Orders

@@ -25,7 +25,10 @@
                             <div>
                                 <div class="fw-semibold fs-5 mb-1">{{ $order->product->name ?? '-' }}</div>
                                 <div class="small text-muted mb-1">x{{ $order->quantity ?? 1 }}</div>
-                                <div class="small text-muted"><i class="bi bi-calendar"></i> {{ $order->created_at->format('d M Y H:i') }}</div>
+                                <div class="small text-muted">
+                                    <i class="bi bi-calendar"></i>
+                                    {{ $order->created_at ? $order->created_at->format('d M Y H:i') : '-' }}
+                                </div>
                             </div>
                         </div>
                         <div class="text-end flex-shrink-0 ms-3" style="min-width:150px;">

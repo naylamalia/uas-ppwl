@@ -15,7 +15,9 @@
             <div class="row mb-3">
                 <div class="col-md-6 mb-2 mb-md-0">
                     <div class="mb-2"><strong>No. Pesanan:</strong> #{{ $order->id }}</div>
-                    <div class="mb-2"><strong>Tanggal Pesan:</strong> {{ $order->created_at->format('d M Y H:i') }}</div>
+                    <div class="mb-2"><strong>Tanggal Pesan:</strong>
+                        {{ $order->created_at ? $order->created_at->format('d M Y H:i') : '-' }}
+                    </div>
                     <div class="mb-2"><strong>Status:</strong>
                         <span class="badge
                             @if($order->status_order == 'belum_selesai') bg-warning text-dark
