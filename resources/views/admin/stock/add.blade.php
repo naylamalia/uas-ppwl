@@ -8,8 +8,8 @@
     <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6">
             <div class="card shadow-sm border-0">
-                <div class="card-header bg-primary text-white">
-                    <h5 class="mb-0 fw-semibold">➕ Tambah Stok Produk</h5>
+                <div class="card-header text-white" style="background-color: firebrick;">
+                    <h5 class="mb-0 fw-semibold"> Tambah Stok Produk</h5>
                 </div>
                 <div class="card-body">
 
@@ -66,7 +66,9 @@
 
                         <div class="d-flex justify-content-between mt-4">
                             <a href="{{ route('admin.stock.index') }}" class="btn btn-outline-secondary">⬅ Kembali</a>
-                            <button type="submit" class="btn btn-success">💾 Tambah Stok</button>
+                            <button type="submit" class="btn text-white" style="background-color: firebrick;">
+                                 Tambah Stok
+                            </button>
                         </div>
                     </form>
                 </div>
