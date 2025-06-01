@@ -134,7 +134,9 @@
             @endif
         </ul>
     </div>
-    <div class="sidenav-footer mx-4 mt-auto ">
+
+    {{-- Sign Out pindah ke paling bawah sidebar --}}
+    <div class="sidenav-footer mx-4 mt-auto" style="margin-top:auto;">
         <form method="POST" action="{{ route('logout') }}" id="logout-form">
             @csrf
             <button type="button"
@@ -142,21 +144,21 @@
                 class="nav-link d-flex align-items-center position-relative ms-0 ps-2 py-2 w-100 text-start"
                 style="background:none; border:none;">
                 <div class="icon icon-shape icon-sm px-0 text-center d-flex align-items-center justify-content-center">
-                    <i class="bi bi-box-arrow-right" style="font-size:1.5rem; color:aliceblue"></i>
+                    <i class="bi bi-box-arrow-right" style="font-size:1.5rem; color:white;"></i>
                 </div>
                 <span class="nav-link-text ms-1 text-white">Sign Out</span>
             </button>
         </form>
     </div>
 
-    <!-- Custom Modal -->
-    <div id="logoutModal" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.3);">
-        <div style="background:#fff; max-width:350px; margin:15% auto; border-radius:8px; box-shadow:0 2px 8px #0002; padding:24px; text-align:center;">
+    <!-- Custom Logout Modal (styled like delete user modal) -->
+    <div class="modal" tabindex="-1" id="logoutModal" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.3);">
+        <div style="background:#fff; max-width:350px; margin:10% auto; border-radius:8px; box-shadow:0 2px 8px #0002; padding:24px; text-align:center;">
             <div class="mb-3">
-                <i class="bi bi-box-arrow-right" style="font-size:2.5rem; color:#dc3545;"></i>
+                <i class="bi bi-box-arrow-right" style="font-size:2.5rem; color:firebrick;"></i>
             </div>
             <div class="mb-3">
-                <div class="mt-2">Apakah Anda yakin ingin keluar?</div>
+                <div class="fw-bold mb-2">Yakin ingin keluar dari akun?</div>
             </div>
             <div class="d-flex justify-content-center gap-2">
                 <button type="button" id="cancelLogout" class="btn btn-secondary btn-sm px-4">Batal</button>
@@ -174,7 +176,7 @@
         const logoutForm = document.getElementById('logout-form');
 
         if (logoutBtn && logoutModal && cancelLogout && confirmLogout && logoutForm) {
-            logoutBtn.addEventListener('click', function (e) {
+            logoutBtn.addEventListener('click', function () {
                 logoutModal.style.display = 'block';
             });
             cancelLogout.addEventListener('click', function () {

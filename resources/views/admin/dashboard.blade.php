@@ -9,22 +9,34 @@
                         $hour = now()->format('H');
                         if ($hour >= 5 && $hour < 12) {
                             $greeting = 'Selamat pagi';
+                            $icon = 'bi-sun-fill';
+                            $iconColor = '#f59e42';
                         } elseif ($hour >= 12 && $hour < 15) {
                             $greeting = 'Selamat siang';
+                            $icon = 'bi-sun-fill';
+                            $iconColor = '#f59e42';
                         } elseif ($hour >= 15 && $hour < 18) {
                             $greeting = 'Selamat sore';
+                            $icon = 'bi-sunset-fill';
+                            $iconColor = '#f59e42';
                         } else {
                             $greeting = 'Selamat malam';
+                            $icon = 'bi-moon-stars-fill';
+                            $iconColor = '#6c757d';
                         }
                         \Carbon\Carbon::setLocale('id');
                         $hari = \Carbon\Carbon::now()->translatedFormat('l, d F Y');
+                        $userName = auth()->user()->name ?? 'Admin';
                     @endphp
 
-                    <div class="mb-md-0 mb-3">
-                        <h3 class="font-weight-bold mb-0" style="color:firebrick;">{{ $greeting }}, Admin</h3>
-                        <div class="text-secondary mt-1" style="font-size:1rem;">
-                            Hari ini: <span style="color:firebrick;">{{ $hari }}</span>
-                        </div>
+                    <div class="mb-md-0 mb-3 d-flex align-items-center gap-2" id="greeting-row">
+                        <i class="bi {{ $icon }}" style="font-size:2rem; color: {{ $iconColor }};"></i>
+                        <h3 class="font-weight-bold mb-0" style="color:firebrick;">
+                            {{ $greeting }}, {{ $userName }}
+                        </h3>
+                    </div>
+                    <div class="text-secondary mt-1" style="font-size:1rem;">
+                        Hari ini: <span style="color:firebrick;">{{ $hari }}</span>
                     </div>
                 </div>
             </div>
@@ -101,7 +113,12 @@
                                         @forelse($recentOrders ?? [] as $order)
                                             <tr>
                                                 <td class="d-flex align-items-center">
-                                                    <img src="{{ $order->product->image_url ?? asset('assets/img/no-image.png') }}" alt="produk" width="36" height="36" class="rounded me-2 border" style="object-fit:cover; border-color:firebrick;">
+                                                    <img 
+                                                        src="{{ $order->product->image ? asset('storage/' . $order->product->image) : asset('assets/img/no-image.png') }}" 
+                                                        alt="produk" 
+                                                        width="36" height="36" 
+                                                        class="rounded me-2 border" 
+                                                        style="object-fit:cover; border-color:firebrick;">
                                                     <span>{{ $order->product->name ?? '-' }}</span>
                                                 </td>
                                                 <td>{{ $order->user->name ?? '-' }}</td>
@@ -124,3 +141,39 @@
         </div>
     </main>
 @endsection
+
+@push('styles')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+@endpush
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const hour = new Date().getHours();
+        let greeting = '', icon = '', iconColor = '';
+        if (hour >= 5 && hour < 12) {
+            greeting = 'Selamat pagi';
+            icon = 'bi-sun-fill';
+            iconColor = '#f59e42';
+        } else if (hour >= 12 && hour < 15) {
+            greeting = 'Selamat siang';
+            icon = 'bi-sun-fill';
+            iconColor = '#f59e42';
+        } else if (hour >= 15 && hour < 18) {
+            greeting = 'Selamat sore';
+            icon = 'bi-sunset-fill';
+            iconColor = '#f59e42';
+        } else {
+            greeting = 'Selamat malam';
+            icon = 'bi-moon-stars-fill';
+            iconColor = '#6c757d';
+        }
+        const userName = "{{ addslashes(auth()->user()->name ?? 'Admin') }}";
+        document.getElementById('greeting-row').innerHTML =
+            `<i class="bi ${icon}" style="font-size:2rem; color:${iconColor}"></i>
+            <h3 class="font-weight-bold mb-0" style="color:firebrick;">
+                ${greeting}, ${userName}
+            </h3>`;
+    });
+</script>
+@endpush

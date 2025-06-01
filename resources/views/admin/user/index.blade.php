@@ -4,7 +4,8 @@
 
 @section('content')
 <div class="container py-4">
-    <h2 class="mb-4 fw-bold" style="color:firebrick;">Manajemen User</h2>
+    <h2 class="mb-4 fw-bold" style="color:firebrick; display:flex; align-items:center; gap:8px;">
+        <i class="bi bi-people"></i>Manajemen Pengguna</h2>
 
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
