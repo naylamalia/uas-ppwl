@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="container py-4">
-    <h2 class="mb-4 fw-bold text-pink"><i class="bi bi-bag-check"></i> Konfirmasi Pesanan</h2>
+    <h2 class="mb-4 fw-bold text-firebrick"><i class="bi bi-bag-check"></i> Konfirmasi Pesanan</h2>
 
     @if(session('error'))
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -16,7 +16,7 @@
     @if(isset($itemsToOrder) && count($itemsToOrder) > 0)
         <div class="table-responsive shadow rounded-3 overflow-hidden">
             <table class="table align-middle mb-0">
-                <thead style="background:#fff0f6;" class="text-center">
+                <thead style="background:#fff5f5;" class="text-center">
                     <tr>
                         <th style="width: 40%;">Nama Produk</th>
                         <th style="width: 15%;">Harga</th>
@@ -32,7 +32,7 @@
                             <td>
                                 <div class="d-flex align-items-center gap-3">
                                     <div class="bg-light rounded" style="width:60px; height:60px; display:flex; align-items:center; justify-content:center;">
-                                        <i class="bi bi-box-seam fs-3" style="color:#ed5aba;"></i>
+                                        <i class="bi bi-box-seam fs-3" style="color:#B22222;"></i>
                                     </div>
                                     <div>
                                         <div class="fw-semibold">{{ $item['name'] }}</div>
@@ -41,21 +41,21 @@
                             </td>
                             <td class="text-end">Rp{{ number_format($item['price'], 0, ',', '.') }}</td>
                             <td class="text-center">{{ $item['quantity'] }}</td>
-                            <td class="text-end fw-semibold text-pink">Rp{{ number_format($item['price'] * $item['quantity'], 0, ',', '.') }}</td>
+                            <td class="text-end fw-semibold text-firebrick">Rp{{ number_format($item['price'] * $item['quantity'], 0, ',', '.') }}</td>
                         </tr>
                     @endforeach
                 </tbody>
                 <tfoot>
-                    <tr style="background:#fff0f6;">
+                    <tr style="background:#fff5f5;">
                         <td colspan="2" class="text-end fw-bold">Grand Total</td>
-                        <td colspan="2" class="text-end fw-bold text-pink">Rp{{ number_format($grandTotal, 0, ',', '.') }}</td>
+                        <td colspan="2" class="text-end fw-bold text-firebrick">Rp{{ number_format($grandTotal, 0, ',', '.') }}</td>
                     </tr>
                 </tfoot>
             </table>
         </div>
         <div class="d-flex justify-content-end mt-4">
             <!-- Tombol trigger modal -->
-            <button type="button" class="btn btn-pink btn-lg shadow-sm" data-bs-toggle="modal" data-bs-target="#alamatModal">
+            <button type="button" class="btn btn-firebrick btn-lg shadow-sm" data-bs-toggle="modal" data-bs-target="#alamatModal">
                 <i class="bi bi-bag-check"></i> Konfirmasi & Buat Pesanan
             </button>
         </div>
@@ -63,7 +63,7 @@
         <div class="text-center py-5">
             <i class="bi bi-cart-x fs-1 text-muted"></i>
             <p class="mt-3 text-muted">Tidak ada produk yang dipilih untuk checkout.</p>
-            <a href="{{ route('customer.cart.index') }}" class="btn btn-pink">
+            <a href="{{ route('customer.cart.index') }}" class="btn btn-firebrick">
                 <i class="bi bi-arrow-left"></i> Kembali ke Keranjang
             </a>
         </div>
@@ -95,7 +95,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-          <button type="submit" class="btn btn-pink">Simpan & Pesan</button>
+          <button type="submit" class="btn btn-firebrick">Simpan & Pesan</button>
         </div>
       </div>
     </form>
@@ -105,19 +105,19 @@
 
 @push('styles')
 <style>
-.text-pink {
-    color: #ed5aba !important;
+.text-firebrick {
+    color: #B22222 !important;
 }
-.btn-pink, .btn-outline-pink {
-    border-color: #ed5aba !important;
+.btn-firebrick, .btn-outline-firebrick {
+    border-color: #B22222 !important;
     color: #fff !important;
-    background: #ed5aba !important;
+    background: #B22222 !important;
 }
-.btn-outline-pink {
+.btn-outline-firebrick {
     background: #fff !important;
-    color: #ed5aba !important;
+    color: #B22222 !important;
 }
-.btn-pink:hover, .btn-outline-pink:hover, .btn-pink:focus, .btn-outline-pink:focus {
+.btn-firebrick:hover, .btn-outline-firebrick:hover, .btn-firebrick:focus, .btn-outline-firebrick:focus {
     background: #e35dd2 !important;
     color: #fff !important;
     border-color: #e35dd2 !important;

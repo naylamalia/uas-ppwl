@@ -135,11 +135,11 @@
     .text-primary {
         color: firebrick !important;
     }
-    .btn-outline-pink {
+    .btn-outline-firebrick {
         border-color: firebrick !important;
         color: firebrick !important;
     }
-    .btn-outline-pink:hover, .btn-outline-pink:focus {
+    .btn-outline-firebrick:hover, .btn-outline-firebrick:focus {
         background: firebrick !important;
         color: #fff !important;
         border-color: firebrick !important;

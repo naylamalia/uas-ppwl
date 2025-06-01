@@ -8,7 +8,7 @@
   --bs-blue: #63B3ED;
   --bs-indigo: #596CFF;
   --bs-purple: #6f42c1;
-  --bs-pink: #d63384;
+  --bs-firebrick: #B22222;
   --bs-red: #F56565;
   --bs-orange: #fd7e14;
   --bs-yellow: #FBD38D;
@@ -71,7 +71,7 @@
   --bs-heading-color: #1e293b;
   --bs-link-color: #774dd3;
   --bs-link-hover-color: #522aaa;
-  --bs-code-color: #d63384;
+  --bs-code-color: #B22222;
   --bs-highlight-bg: #fcf8e3;
 }
 
