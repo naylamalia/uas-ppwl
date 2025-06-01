@@ -5,7 +5,7 @@
 
 @section('content')
 <div class="container py-4">
-    <h2 class="mb-4 fw-bold text-pink"><i class="bi bi-receipt"></i> Riwayat Pesanan Saya</h2>
+    <h2 class="mb-4 fw-bold text-firebrick"><i class="bi bi-receipt"></i> Riwayat Pesanan Saya</h2>
 
     @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -22,10 +22,10 @@
                     <div class="card-body d-flex flex-wrap align-items-center justify-content-between">
                         <div class="d-flex align-items-center gap-3 flex-grow-1">
                             <div class="bg-light rounded-circle d-flex align-items-center justify-content-center" style="width:60px; height:60px;">
-                                <i class="bi bi-box-seam fs-2" style="color:#ed5aba;"></i>
+                                <i class="bi bi-box-seam fs-2" style="color:firebrick;"></i>
                             </div>
                             <div>
-                                <div class="fw-semibold fs-5 mb-1">{{ $order->product->name ?? '-' }}</div>
+                                <div class="fw-semibold fs-5 mb-1 text-firebrick">{{ $order->product->name ?? '-' }}</div>
                                 <div class="small text-muted mb-1">x{{ $order->quantity ?? 1 }}</div>
                                 <div class="small text-muted">
                                     <i class="bi bi-calendar"></i>
@@ -34,22 +34,19 @@
                             </div>
                         </div>
                         <div class="text-end flex-shrink-0 ms-3" style="min-width:150px;">
-                            <div class="fw-bold text-pink fs-5 mb-2">Rp{{ number_format($order->price ?? 0, 0, ',', '.') }}</div>
+                            <div class="fw-bold text-firebrick fs-5 mb-2">Rp{{ number_format($order->price ?? 0, 0, ',', '.') }}</div>
                             <span class="badge 
-                                @if($order->status_order == 'belum_selesai') bg-warning
-                                @elseif($order->status_order == 'selesai') bg-success
-                                @elseif($order->status_order == 'batal') bg-danger
-                                @else bg-secondary
+                                @if($order->status_order == 'belum_selesai') badge-warning
+                                @elseif($order->status_order == 'selesai') badge-success
+                                @elseif($order->status_order == 'batal' || $order->status_order == 'dibatalkan') badge-danger
+                                @else badge-danger
                                 @endif
-                                px-3 py-2 text-capitalize"
-                                style="background:{{ $order->status_order == 'belum_selesai' ? '#fff0f6' : '' }};
-                                       color:{{ $order->status_order == 'belum_selesai' ? '#ed5aba' : '' }};
-                                ">
+                                px-3 py-2 text-capitalize">
                                 {{ str_replace('_', ' ', $order->status_order) }}
                             </span>
                         </div>
                         <div class="ms-3">
-                            <a href="{{ route('customer.orders.show', $order->id) }}" class="btn btn-outline-pink btn-sm rounded-pill" title="Detail">
+                            <a href="{{ route('customer.orders.show', $order->id) }}" class="btn btn-outline-firebrick btn-sm rounded-pill" title="Detail">
                                 <i class="bi bi-eye"></i> Detail
                             </a>
                         </div>
@@ -65,7 +62,7 @@
         <div class="text-center py-5">
             <i class="bi bi-receipt fs-1 text-muted"></i>
             <p class="mt-3 text-muted">Belum ada pesanan.</p>
-            <a href="{{ route('customer.products.index') }}" class="btn btn-pink">
+            <a href="{{ route('customer.products.index') }}" class="btn btn-firebrick">
                 <i class="bi bi-arrow-left"></i> Belanja Sekarang
             </a>
         </div>
@@ -75,34 +72,55 @@
 
 @push('styles')
 <style>
+.text-firebrick {
+    color: firebrick !important;
+}
+.btn-firebrick, .btn-outline-firebrick {
+    border-color: firebrick !important;
+    color: #fff !important;
+    background: firebrick !important;
+}
+.btn-outline-firebrick {
+    background: #fff !important;
+    color: firebrick !important;
+}
+.btn-firebrick:hover, .btn-outline-firebrick:hover, .btn-firebrick:focus, .btn-outline-firebrick:focus {
+    background: #b22222 !important;
+    color: #fff !important;
+    border-color: #b22222 !important;
+}
 .order-card {
     transition: box-shadow .2s;
 }
 .order-card:hover {
-    box-shadow: 0 0.5rem 1.5rem rgba(237,90,186,.12);
-    border-color: #ed5aba22;
+    box-shadow: 0 0.5rem 1.5rem rgba(178,34,34,.12);
+    border-color: #b2222222;
 }
 .badge {
     font-size: 1em;
     border-radius: 0.5rem;
     letter-spacing: .5px;
 }
-.text-pink {
-    color: #ed5aba !important;
+.badge-success {
+    background-color: forestgreen;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: bold;
 }
-.btn-pink, .btn-outline-pink {
-    border-color: #ed5aba !important;
-    color: #fff !important;
-    background: #ed5aba !important;
+.badge-warning {
+    background-color: #f59e42;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: bold;
 }
-.btn-outline-pink {
-    background: #fff !important;
-    color: #ed5aba !important;
-}
-.btn-pink:hover, .btn-outline-pink:hover, .btn-pink:focus, .btn-outline-pink:focus {
-    background: #e35dd2 !important;
-    color: #fff !important;
-    border-color: #e35dd2 !important;
+.badge-danger {
+    background-color: firebrick;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: bold;
 }
 </style>
 @endpush

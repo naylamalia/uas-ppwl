@@ -2,12 +2,48 @@
 
 @section('title', 'Dashboard Customer')
 
+@push('styles')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<style>
+    body {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #ff69b4 0%, #fffbe9 100%);
+        background-attachment: fixed;
+    }
+    .card, .card-body {
+        background: rgba(255,255,255,0.95) !important;
+    }
+    .card-header {
+        background: linear-gradient(195deg, #ff69b4, #fffbe9) !important;
+        color: #ff69b4 !important;
+        border-bottom: 1px solid #ff69b4 !important;
+    }
+    .btn-outline-primary, .btn-outline-danger, .btn-outline-secondary {
+        border-color: #ff69b4 !important;
+        color: #ff69b4 !important;
+    }
+    .btn-outline-primary:hover, .btn-outline-danger:hover, .btn-outline-secondary:hover {
+        background: #ff69b4 !important;
+        color: #fff !important;
+    }
+    .text-dark, .fw-bold {
+        color: #ff69b4 !important;
+    }
+    .list-group-item {
+        background: rgba(255,255,255,0.95) !important;
+    }
+    .border, .card.border {
+        border-color: #ff69b4 !important;
+    }
+</style>
+@endpush
+
 @section('content')
     <div class="row g-4">
         {{-- Produk Terbaru --}}
         <div class="col-md-6">
-            <div class="card border-0 shadow-sm">
-                <div class="card-header bg-warning text-dark">
+            <div class="card border">
+                <div class="card-header">
                     <h5 class="mb-0"><i class="bi bi-stars me-2"></i>Produk Terbaru</h5>
                 </div>
                 <div class="card-body">
@@ -33,8 +69,8 @@
 
         {{-- Produk Terpopuler --}}
         <div class="col-md-6">
-            <div class="card border-0 shadow-sm">
-                <div class="card-header bg-warning text-dark">
+            <div class="card border">
+                <div class="card-header">
                     <h5 class="mb-0"><i class="bi bi-fire me-2"></i>Produk Terpopuler</h5>
                 </div>
                 <div class="card-body">
@@ -61,8 +97,8 @@
 
     {{-- Hasil Pencarian (Jika Ada) --}}
     @if(isset($searchResults))
-        <div class="card mt-5 border-0 shadow-sm">
-            <div class="card-header bg-info text-white">
+        <div class="card mt-5 border">
+            <div class="card-header">
                 <h5 class="mb-0"><i class="bi bi-search me-2"></i>Hasil Pencarian</h5>
             </div>
             <div class="card-body">
