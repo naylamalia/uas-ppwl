@@ -1,5 +1,7 @@
 @extends('layouts.admin')
 
+@section('title', 'Daftar Order')
+
 @section('content')
 <div class="container py-5">
     <h2 class="mb-4 fw-bold" style="color:firebrick; display:flex; align-items:center; gap:8px;">
