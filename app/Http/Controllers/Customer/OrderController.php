@@ -29,8 +29,6 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
-        $alamat = $request->input('alamat');
-
         $request->validate([
             'product_id' => 'required|exists:products,id',
             'quantity' => 'required|integer|min:1',
@@ -46,11 +44,18 @@ class OrderController extends Controller
             return back()->with('error', 'Stok produk tidak mencukupi.');
         }
 
+        // Ambil alamat dari input, jika kosong ambil dari tabel customer (field address)
+        $alamat = $request->input('alamat');
+        if (empty($alamat)) {
+            $customer = \App\Models\Customer::where('user_id', Auth::id())->first();
+            $alamat = $customer && !empty($customer->address) ? $customer->address : '';
+        }
+
         // Buat order baru
         $order = Order::create([
             'user_id' => Auth::id(),
             'price' => $product->price * $request->quantity,
-            'alamat' => $alamat,
+            'alamat' => $alamat, // alamat pasti terisi
             'rincian_pemesanan' => $request->rincian_pemesanan ?? '',
             'pilihan_cod' => $request->pilihan_cod ?? false,
             'status_order' => 'belum_selesai',

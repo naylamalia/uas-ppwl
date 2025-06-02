@@ -86,7 +86,6 @@ class CartController extends Controller
         $selected = array_map('intval', $request->input('selected_products', []));
         $alamat = $request->input('alamat');
         $catatan = $request->input('catatan');
-        
 
         if (empty($selected)) {
             return redirect()->route('customer.cart.index')->with('error', 'Tidak ada produk yang dipilih.');
@@ -126,12 +125,18 @@ class CartController extends Controller
             return redirect()->route('customer.cart.index')->withErrors($errors);
         }
 
+        // Pastikan alamat tidak null, ambil dari customer jika kosong
+        if (empty($alamat)) {
+            $customer = \App\Models\Customer::where('user_id', auth()->id())->first();
+            $alamat = $customer && !empty($customer->address) ? $customer->address : '';
+        }
+
         $order = Order::create([
             'id' => 'ORD-'.strtoupper(uniqid()),
             'user_id' => auth()->id(),
             'price' => collect($itemsToOrder)->sum(fn($i) => $i['price'] * $i['quantity']),
             'status' => 'pending',
-            'alamat' => $alamat,
+            'alamat' => $alamat, // <-- alamat pasti terisi
             'rincian_pemesanan' => $catatan ?? '',
             'pilihan_cod' => $request->input('pilihan_cod', false),
         ]);
