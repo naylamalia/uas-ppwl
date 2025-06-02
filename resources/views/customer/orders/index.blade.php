@@ -1,4 +1,3 @@
-{{-- filepath: c:\laragon\www\uas-ppwl\resources\views\Customer\orders\index.blade.php --}}
 @extends('layouts.customer')
 
 @section('title', 'Daftar Pesanan')
@@ -25,8 +24,10 @@
                                 <i class="bi bi-box-seam fs-2" style="color:firebrick;"></i>
                             </div>
                             <div>
-                                <div class="fw-semibold fs-5 mb-1 text-firebrick">{{ $order->product->name ?? '-' }}</div>
-                                <div class="small text-muted mb-1">x{{ $order->quantity ?? 1 }}</div>
+                                @foreach($order->orderItems as $item)
+                                    <div class="fw-semibold fs-5 mb-1">{{ $item->product->name ?? '-' }}</div>
+                                    <div class="small text-muted mb-1">x{{ $item->quantity ?? 1 }}</div>
+                                @endforeach
                                 <div class="small text-muted">
                                     <i class="bi bi-calendar"></i>
                                     {{ $order->created_at ? $order->created_at->format('d M Y H:i') : '-' }}

@@ -117,11 +117,12 @@ class CartController extends Controller
 
         // Simpan order ke database
         $order = \App\Models\Order::create([
+            'id' => 'ORD-' . strtoupper(uniqid()),
             'user_id' => auth()->id(),
-            'total' => collect($itemsToOrder)->sum(fn($i) => $i['price'] * $i['quantity']),
+            'price' => collect($itemsToOrder)->sum(fn($i) => $i['price'] * $i['quantity']),
             'status' => 'pending',
             'alamat' => $alamat,
-            'catatan' => $catatan,
+            'rincian_pemesanan' => is_array($catatan) ? collect($catatan)->implode(', ') : $catatan,
         ]);
 
         foreach ($itemsToOrder as $item) {
@@ -131,7 +132,6 @@ class CartController extends Controller
                 empty($item['product_id']) ||
                 empty($item['quantity'])
             ) {
-                // Lewati jika data tidak valid
                 continue;
             }
             $order->orderItems()->create([
@@ -148,5 +148,5 @@ class CartController extends Controller
         session(['cart' => $cart]);
 
         return redirect()->route('customer.orders.index')->with('success', 'Pesanan berhasil dibuat!');
-    }
+        }
 }

@@ -111,10 +111,18 @@
                                 {{ $product->stock > 0 ? 'Stok: ' . $product->stock : 'Habis' }}
                             </span>
                         </div>
-                        <div class="mt-auto">
+                        <div class="mt-auto d-flex gap-2">
                             <a href="{{ route('customer.products.show', $product->id) }}" class="btn btn-detail w-100">
                                 <i class="bi bi-eye"></i> Lihat Detail
                             </a>
+                            @if($product->stock > 0)
+                                <form action="{{ route('customer.cart.add', $product->id) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    <button type="submit" class="btn btn-success w-100" style="border-radius:50px;">
+                                        <i class="bi bi-cart-plus"></i> Keranjang
+                                    </button>
+                                </form>
+                            @endif
                         </div>
                     </div>
                 </div>

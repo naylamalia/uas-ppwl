@@ -12,9 +12,7 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $user = Auth::user();
         $orders = Order::where('user_id', auth()->id())->latest()->paginate(10);
-
         return view('customer.orders.index', compact('orders'));
     }
 
@@ -23,7 +21,7 @@ class OrderController extends Controller
         $user = Auth::user();
         $order = Order::where('id', $id)
                       ->where('user_id', $user->id)
-                      ->with('product')
+                      ->with('orderItems.product')
                       ->firstOrFail();
 
         return view('customer.orders.show', compact('order'));
@@ -46,19 +44,25 @@ class OrderController extends Controller
             return back()->with('error', 'Stok produk tidak mencukupi.');
         }
 
-        // Kurangi stok
-        $product->decrement('stock', $request->quantity);
-
+        // Buat order baru
         $order = Order::create([
             'user_id' => Auth::id(),
-            'product_id' => $product->id,
-            'quantity' => $request->quantity,
             'price' => $product->price * $request->quantity,
             'alamat' => $request->alamat,
             'rincian_pemesanan' => $request->rincian_pemesanan,
             'pilihan_cod' => $request->pilihan_cod ?? false,
             'status_order' => 'belum_selesai',
         ]);
+
+        // Simpan detail produk ke order_items
+        $order->orderItems()->create([
+            'product_id' => $product->id,
+            'quantity' => $request->quantity,
+            'price' => $product->price,
+        ]);
+
+        // Setelah order berhasil dibuat, lakukan pengurangan stok:
+        $product->decrement('stock', $request->quantity);
 
         return redirect()->route('customer.orders.index')->with('success', 'Order berhasil dibuat!');
     }
