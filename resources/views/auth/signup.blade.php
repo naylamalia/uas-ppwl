@@ -1,3 +1,4 @@
+@section('title', 'Sign Up | PocketGear')
 <x-guest-layout>
     <div class="container position-sticky z-index-sticky top-0"></div>
     <main class="main-content mt-0" style="background:white; min-height:100vh;">

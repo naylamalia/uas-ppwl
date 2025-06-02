@@ -1,5 +1,7 @@
 @extends('layouts.admin')
 
+@section('title', 'Detail Order')
+
 @section('content')
 <div class="container py-5">
     <h2 class="mb-5 fw-bold" style="color:firebrick;">

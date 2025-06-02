@@ -1,6 +1,6 @@
 @extends('components.app.navbar')
 
-@section('title', 'Daftar Pesanan')
+@section('title', 'Riwayat Pesanan')
 
 @section('content')
 <div class="container py-4">

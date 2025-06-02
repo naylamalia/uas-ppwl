@@ -49,11 +49,9 @@
         <meta property="product:category" content="Admin &amp; Dashboards">
         <meta name="data-turbolinks-track" content="false">
     @endif
-    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-    <link rel="icon" type="image/png" href="../assets/img/favicon.png">
-    <title>
-        Corporate UI by Creative Tim & UPDIVISION
-    </title>
+    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/gear.png">
+    <link rel="icon" type="image/png" href="../assets/img/gear.png">
+        <title>@yield('title', 'Corporate UI by Creative Tim & UPDIVISION')</title>
     <!--     Fonts and icons     -->
     <link
         href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Noto+Sans:300,400,500,600,700,800|PT+Mono:300,400,500,600,700"
