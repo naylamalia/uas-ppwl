@@ -1,5 +1,5 @@
 {{-- filepath: c:\laragon\www\uas-ppwl\resources\views\Customer\products\show.blade.php --}}
-@extends('layouts.customer')
+@extends('components.app.navbar')
 
 @section('content')
 <div class="container py-4">
@@ -58,7 +58,7 @@
                               </div>
                               <div class="mb-2">
                                 <label for="rincian_pemesanan" class="form-label">Catatan/Rincian Pemesanan</label>
-                                <textarea name="rincian_pemesanan" id="rincian_pemesanan" class="form-control" rows="2" required>{{ old('rincian_pemesanan') }}</textarea>
+                                <textarea name="rincian_pemesanan" id="rincian_pemesanan" class="form-control" rows="2">{{ old('rincian_pemesanan') }}</textarea>
                               </div>
                               <div class="form-check mb-3">
                                 <input class="form-check-input" type="checkbox" value="1" id="pilihan_cod" name="pilihan_cod">
@@ -141,6 +141,10 @@
 
 @push('styles')
 <style>
+    .btn-primary:active {
+        background: firebrick !important;
+        border-color: firebrick !important;
+    }
     .card-img-top {
         object-fit: cover;
         height: 320px;

@@ -1,21 +1,16 @@
 <x-guest-layout>
-    <div class="container position-sticky z-index-sticky top-0">
-        <div class="row">
-            <div class="col-12">
-                <x-guest.sidenav-guest />
-            </div>
-        </div>
-    </div>
-    <main class="main-content  mt-0">
+    <main class="main-content mt-0"
+        style="background:white; min-height:100vh;">
         <section>
             <div class="page-header min-vh-100">
                 <div class="container">
                     <div class="row">
                         <div class="col-xl-4 col-md-6 d-flex flex-column mx-auto">
-                            <div class="card card-plain mt-8">
-                                <div class="card-header pb-0 text-left bg-transparent">
-                                    <h3 class="font-weight-black text-dark display-6 text-center">Forgot password?</h3>
-                                    <p class="mb-0 text-center">Enter your email below!</p>
+                            <div class="card card-plain mt-8 shadow"
+                                style="border:1.5px solid firebrick; background:#fff5f5;">
+                                <div class="card-header pb-0 text-left bg-transparent text-center">
+                                    <h3 class="font-weight-black" style="color:firebrick;">Forgot password?</h3>
+                                    <p class="mb-0 text-firebrick">Enter your email below!</p>
                                 </div>
                                 @if ($errors->any())
                                     <div class="alert alert-danger text-sm" role="alert">
@@ -37,16 +32,26 @@
                                 <div class="card-body">
                                     <form role="form" action="/forgot-password" method="POST">
                                         {{ csrf_field() }}
+                                        <label class="text-firebrick">Email Address</label>
                                         <div class="mb-3">
                                             <input type="email" class="form-control" placeholder="Email"
                                                 aria-label="Email" id="email" name="email"
-                                                value="{{ old('email') }}" required autofocus>
+                                                value="{{ old('email') }}" required autofocus
+                                                style="border-color:firebrick; background:white;">
                                         </div>
                                         <div class="text-center">
-                                            <button type="submit" class="my-4 mb-2 btn btn-dark btn-lg w-100">Email
-                                                password reset link</button>
+                                            <button type="submit" class="btn w-100 mt-4 mb-3"
+                                                style="background:firebrick; color:#fff;">Email password reset link
+                                            </button>
                                         </div>
                                     </form>
+                                </div>
+                                <div class="card-footer text-center pt-0 px-lg-2 px-1">
+                                    <p class="mb-4 text-xs mx-auto text-firebrick">
+                                        Remember your password?
+                                        <a href="{{ route('sign-in') }}"
+                                            class="font-weight-bold text-firebrick">Sign in</a>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -54,13 +59,6 @@
                             <div class="position-absolute w-40 top-0 end-0 h-100 d-md-block d-none">
                                 <div class="oblique-image position-absolute fixed-top ms-auto h-100 z-index-0 bg-cover ms-n8"
                                     style="background-image:url('../assets/img/image-sign-in.jpg')">
-                                    <div
-                                        class="blur mt-12 p-4 text-center border border-white border-radius-md position-absolute fixed-bottom m-4">
-                                        <h2 class="mt-3 text-dark font-weight-bold">Enter our global community of
-                                            developers.</h2>
-                                        <h6 class="text-dark text-sm mt-5">Copyright © 2022 Corporate UI Design System
-                                            by Creative Tim.</h6>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -69,5 +67,28 @@
             </div>
         </section>
     </main>
+    @push('styles')
+    <style>
+        .text-firebrick {
+            color: firebrick !important;
+        }
 
+        .form-control:focus {
+            border-color: firebrick !important;
+            box-shadow: 0 0 0 0.1rem rgba(178, 34, 34, 0.15);
+        }
+
+        .btn-firebrick,
+        .btn-firebrick:focus,
+        .btn-firebrick:hover {
+            background: firebrick !important;
+            color: #fff !important;
+            border-color: firebrick !important;
+        }
+
+        .card {
+            border-radius: 1.25rem;
+        }
+    </style>
+    @endpush
 </x-guest-layout>

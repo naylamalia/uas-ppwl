@@ -156,17 +156,18 @@
                                         @foreach($order->products as $product)
                                             <tr>
                                                 <td class="text-center">
-                                                    <img src="{{ $product->image ? asset('storage/' . $product->image) : asset('assets/img/no-image.png') }}"
-                                                         alt="produk" width="36" height="36"
-                                                         class="rounded me-2 border" style="object-fit:cover; border-color:firebrick;">
-                                                    <span>{{ $product->name ?? '-' }}</span>
+                                                    <div class="d-flex align-items-center justify-content-center gap-2">
+                                                        <span class="badge" style="background: firebrick;">x{{ $product->pivot->quantity }}</span>
+                                                        <img src="{{ $product->image ? asset('storage/' . $product->image) : asset('assets/img/no-image.png') }}"
+                                                             alt="produk" width="36" height="36"
+                                                             class="rounded border" style="object-fit:cover; border-color:firebrick;">
+                                                        <span>{{ $product->name ?? '-' }}</span>
+                                                    </div>
                                                 </td>
                                                 <td class="text-center">{{ $order->user->name ?? '-' }}</td>
                                                 <td class="text-center">{{ $order->created_at ? $order->created_at->format('d-m-Y H:i') : '-' }}</td>
                                                 <td style="color:firebrick;" class="text-center text-success fw-bold">
                                                     Rp{{ number_format($product->pivot->price * $product->pivot->quantity, 0, ',', '.') }}
-                                                    <br>
-                                                    <span class="badge bg-secondary">x{{ $product->pivot->quantity }}</span>
                                                 </td>
                                             </tr>
                                         @endforeach

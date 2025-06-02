@@ -93,6 +93,8 @@
         </div>
     </div>
 </div>
+{{-- Footer --}}
+        <x-app.footer />
 
 <script>
     let selectedUserId = null;

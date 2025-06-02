@@ -33,7 +33,7 @@ class OrderController extends Controller
             'product_id' => 'required|exists:products,id',
             'quantity' => 'required|integer|min:1',
             'alamat' => 'required|string',
-            'rincian_pemesanan' => 'required|string',
+            'rincian_pemesanan' => 'nullable|string',
             'pilihan_cod' => 'boolean',
         ]);
 
@@ -49,7 +49,7 @@ class OrderController extends Controller
             'user_id' => Auth::id(),
             'price' => $product->price * $request->quantity,
             'alamat' => $request->alamat,
-            'rincian_pemesanan' => $request->rincian_pemesanan,
+            'rincian_pemesanan' => $request->rincian_pemesanan ?? '',
             'pilihan_cod' => $request->pilihan_cod ?? false,
             'status_order' => 'belum_selesai',
         ]);
