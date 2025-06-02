@@ -1,4 +1,4 @@
-@extends('layouts.customer')
+@extends('components.app.navbar')
 
 @section('title', 'Dashboard Customer')
 
@@ -7,33 +7,33 @@
 <style>
     body {
         min-height: 100vh;
-        background: linear-gradient(135deg, #ff69b4 0%, #fffbe9 100%);
+        background: linear-gradient(135deg, firebrick 0%, #fffbe9 100%);
         background-attachment: fixed;
     }
     .card, .card-body {
         background: rgba(255,255,255,0.95) !important;
     }
     .card-header {
-        background: linear-gradient(195deg, #ff69b4, #fffbe9) !important;
-        color: #ff69b4 !important;
-        border-bottom: 1px solid #ff69b4 !important;
+        background: linear-gradient(195deg, firebrick, #fffbe9) !important;
+        color: firebrick !important;
+        border-bottom: 1px solid firebrick !important;
     }
     .btn-outline-primary, .btn-outline-danger, .btn-outline-secondary {
-        border-color: #ff69b4 !important;
-        color: #ff69b4 !important;
+        border-color: firebrick !important;
+        color: firebrick !important;
     }
     .btn-outline-primary:hover, .btn-outline-danger:hover, .btn-outline-secondary:hover {
-        background: #ff69b4 !important;
+        background: firebrick !important;
         color: #fff !important;
     }
     .text-dark, .fw-bold {
-        color: #ff69b4 !important;
+        color: firebrick !important;
     }
     .list-group-item {
         background: rgba(255,255,255,0.95) !important;
     }
     .border, .card.border {
-        border-color: #ff69b4 !important;
+        border-color: firebrick !important;
     }
 </style>
 @endpush

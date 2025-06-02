@@ -1,5 +1,5 @@
 {{-- filepath: c:\laragon\www\uas-ppwl\resources\views\customer\cart\checkout.blade.php --}}
-@extends('layouts.customer')
+@extends('components.app.navbar')
 @section('title', 'Konfirmasi Checkout')
 
 @section('content')

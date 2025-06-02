@@ -1,5 +1,5 @@
 {{-- filepath: c:\laragon\www\uas-ppwl\resources\views\Customer\orders\show.blade.php --}}
-@extends('layouts.customer')
+@extends('components.app.navbar')
 
 @section('content')
 <div class="container py-4">
@@ -38,7 +38,7 @@
             <div class="row mb-2">
                 <div class="col-md-6 mb-2 mb-md-0">
                     <strong>Catatan/Rincian Pemesanan:</strong>
-                    <div>{{ $order->rincian_pemesanan }}</div>
+                    <div>{{ $order->rincian_pemesanan ? $order->rincian_pemesanan : '-' }}</div>
                 </div>
                 <div class="col-md-6">
                     <strong>Pembayaran:</strong>

@@ -58,5 +58,7 @@
             <a href="{{ route('admin.stock.index') }}" class="btn btn-light">Batal</a>
         </div>
     </form>
+    {{-- Footer --}}
+        <x-app.footer />
 </div>
 @endsection

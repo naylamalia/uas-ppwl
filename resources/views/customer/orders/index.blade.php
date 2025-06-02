@@ -1,4 +1,4 @@
-@extends('layouts.customer')
+@extends('components.app.navbar')
 
 @section('title', 'Daftar Pesanan')
 

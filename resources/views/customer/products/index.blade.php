@@ -1,4 +1,4 @@
-@extends('layouts.customer') 
+@extends('components.app.navbar')
 @section('title', 'Daftar Produk')
 
 @push('styles')
@@ -70,20 +70,30 @@
 
     {{-- Filter Form --}}
     <form method="GET" class="mb-4 row g-3 align-items-end">
-        <div class="col-md-4">
-            <label class="form-label text-muted">Cari Produk</label>
+        <div class="col-md-3">
+            <label class="form-label text-muted">Cari Nama Produk</label>
             <input type="text" name="search" value="{{ request('search') }}" class="form-control shadow-sm" placeholder="Contoh: Samsung, Iphone...">
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <label class="form-label text-muted">Kategori</label>
-            <select name="category" class="form-select shadow-sm">
+            <select name="category" class="form-select shadow-sm text-muted">
                 <option value="">Semua Kategori</option>
                 @foreach ($categories as $cat)
                     <option value="{{ $cat }}" {{ request('category') == $cat ? 'selected' : '' }}>{{ ucfirst($cat) }}</option>
                 @endforeach
             </select>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
+            <label class="form-label text-muted">Filter Harga</label>
+            <select name="price" class="form-select shadow-sm text-muted">
+                <option value="">Semua Harga</option>
+                <option value="1" {{ request('price') == '1' ? 'selected' : '' }}>Rp 1.000.000 - Rp 5.000.000</option>
+                <option value="2" {{ request('price') == '2' ? 'selected' : '' }}>Rp 6.000.000 - Rp 10.000.000</option>
+                <option value="3" {{ request('price') == '3' ? 'selected' : '' }}>Rp 11.000.000 - Rp 15.000.000</option>
+                <option value="4" {{ request('price') == '4' ? 'selected' : '' }}>Lebih dari Rp 15.000.000</option>
+            </select>
+        </div>
+        <div class="col-md-3 d-flex align-items-end">
             <button type="submit" class="btn" style="background:firebrick; color:white; width:100%;">
                 <i class="bi bi-funnel"></i> Filter
             </button>
@@ -119,7 +129,7 @@
                                 <form action="{{ route('customer.cart.add', $product->id) }}" method="POST" style="display:inline;">
                                     @csrf
                                     <button type="submit" class="btn btn-success w-100" style="border-radius:50px;">
-                                        <i class="bi bi-cart-plus"></i> Keranjang
+                                        <i class="bi bi-cart-plus"></i>
                                     </button>
                                 </form>
                             @endif

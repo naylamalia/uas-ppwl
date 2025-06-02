@@ -103,5 +103,7 @@
             </table>
         </div>
     </div>
+    {{-- Footer --}}
+        <x-app.footer />
 </div>
 @endsection

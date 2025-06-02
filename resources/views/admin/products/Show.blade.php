@@ -36,4 +36,6 @@
         </div>
     </div>
 </div>
+{{-- Footer --}}
+        <x-app.footer />
 @endsection

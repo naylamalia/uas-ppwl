@@ -61,4 +61,6 @@
         </div>
     </form>
 </div>
+{{-- Footer --}}
+        <x-app.footer />
 @endsection

@@ -79,5 +79,7 @@
     <div class="mt-4 d-flex justify-content-center text-center">
         {{ $products->links() }}
     </div>
+    {{-- Footer --}}
+        <x-app.footer />
 </div>
 @endsection

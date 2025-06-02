@@ -1,8 +1,6 @@
 <x-guest-layout>
-
-    <div class="container position-sticky z-index-sticky top-0">
-    </div>
-    <main class="main-content  mt-0">
+    <div class="container position-sticky z-index-sticky top-0"></div>
+    <main class="main-content mt-0" style="background:white; min-height:100vh;">
         <section>
             <div class="page-header min-vh-100">
                 <div class="container">
@@ -15,43 +13,45 @@
                                         <h1 class="mt-3 text-white font-weight-bolder">Start your <br> new journey with PocketGear!</h1>
                                         <p class="text-white text-lg mt-4 mb-4">Pilih, Klik, Kantongin!</p>
                                     </div>
-                                    <div class="text-start position-absolute fixed-bottom ms-7">
-                                    </div>
+                                    <div class="text-start position-absolute fixed-bottom ms-7"></div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-4 d-flex flex-column mx-auto">
-                            <div class="card card-plain mt-8">
-                                <div class="card-header pb-0 text-left bg-transparent">
-                                    <h3 class="font-weight-black text-dark display-6">Sign up</h3>
-                                    <p class="mb-0">Nice to meet you! Please enter your details.</p>
+                            <div class="card card-plain mt-8 shadow" style="border:1.5px solid firebrick; background:#fff5f5;">
+                                <div class="card-header pb-0 text-left bg-transparent text-center">
+                                    <h3 class="font-weight-black" style="color:firebrick;">Sign up</h3>
+                                    <p class="mb-0 text-firebrick">Nice to meet you! Please enter your details.</p>
                                 </div>
                                 <div class="card-body">
                                     <form role="form" method="POST" action="{{ route('sign-up') }}">
                                         @csrf
-                                        <label>Name</label>
+                                        <label class="text-firebrick">Name</label>
                                         <div class="mb-3">
                                             <input type="text" id="name" name="name" class="form-control"
                                                 placeholder="Enter your name" value="{{old("name")}}" aria-label="Name"
-                                                aria-describedby="name-addon">
+                                                aria-describedby="name-addon"
+                                                style="border-color:firebrick; background:white;">
                                             @error('name')
                                                 <span class="text-danger text-sm">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label>Email Address</label>
+                                        <label class="text-firebrick">Email Address</label>
                                         <div class="mb-3">
                                             <input type="email" id="email" name="email" class="form-control"
                                                 placeholder="Enter your email address" value="{{old("email")}}" aria-label="Email"
-                                                aria-describedby="email-addon">
+                                                aria-describedby="email-addon"
+                                                style="border-color:firebrick; background:white;">
                                             @error('email')
                                                 <span class="text-danger text-sm">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label>Password</label>
+                                        <label class="text-firebrick">Password</label>
                                         <div class="mb-3">
                                             <input type="password" id="password" name="password" class="form-control"
                                                 placeholder="Create a password" aria-label="Password"
-                                                aria-describedby="password-addon">
+                                                aria-describedby="password-addon"
+                                                style="border-color:firebrick; background:white;">
                                             @error('password')
                                                 <span class="text-danger text-sm">{{ $message }}</span>
                                             @enderror
@@ -59,24 +59,23 @@
                                         <div class="form-check form-check-info text-left mb-0">
                                             <input class="form-check-input" type="checkbox" name="terms"
                                                 id="terms" required>
-                                            <label class="font-weight-normal text-dark mb-0" for="terms">
-                                                I agree the <a href="javascript:;"
-                                                    class="text-dark font-weight-bold">Terms and Conditions</a>.
+                                            <label class="font-weight-normal text-firebrick mb-0" for="terms">
+                                                I agree the <a href="javascript:;" class="text-firebrick font-weight-bold">Terms and Conditions</a>.
                                             </label>
                                             @error('terms')
                                                 <span class="text-danger text-sm">{{ $message }}</span>
                                             @enderror
                                         </div>
                                         <div class="text-center">
-                                            <button type="submit" class="btn btn-dark w-100 mt-4 mb-3">Sign up</button>
+                                            <button type="submit" class="btn w-100 mt-4 mb-3"
+                                                style="background:firebrick; color:#fff;">Sign up</button>
                                         </div>
                                     </form>
                                 </div>
                                 <div class="card-footer text-center pt-0 px-lg-2 px-1">
-                                    <p class="mb-4 text-xs mx-auto">
+                                    <p class="mb-4 text-xs mx-auto text-firebrick">
                                         Already have an account?
-                                        <a href="{{ route('sign-in') }}" class="text-dark font-weight-bold">Sign
-                                            in</a>
+                                        <a href="{{ route('sign-in') }}" class="font-weight-bold text-firebrick">Sign in</a>
                                     </p>
                                 </div>
                             </div>
@@ -86,5 +85,16 @@
             </div>
         </section>
     </main>
-
+    @push('styles')
+    <style>
+        .text-firebrick { color: firebrick !important; }
+        .form-control:focus { border-color: firebrick !important; box-shadow: 0 0 0 0.1rem rgba(178,34,34,0.15); }
+        .btn-firebrick, .btn-firebrick:focus, .btn-firebrick:hover {
+            background: firebrick !important;
+            color: #fff !important;
+            border-color: firebrick !important;
+        }
+        .card { border-radius: 1.25rem; }
+    </style>
+    @endpush
 </x-guest-layout>
