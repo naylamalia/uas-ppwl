@@ -2,6 +2,43 @@
 
 @section('title', 'Dashboard Admin')
 
+@push('styles')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<style>
+    body {
+        min-height: 100vh;
+        background: #fff;
+    }
+    .card, .card-body {
+        background: #fff !important;
+    }
+    .card-header, .border-bottom {
+        background: #fff !important;
+        border-color: firebrick !important;
+    }
+    .card-header h5, .fw-bold, .text-dark, .card-header, .fs-4, .font-weight-bold {
+        color: firebrick !important;
+    }
+    .btn-outline-primary, .btn-outline-danger, .btn-outline-secondary {
+        border-color: firebrick !important;
+        color: firebrick !important;
+    }
+    .btn-outline-primary:hover, .btn-outline-danger:hover, .btn-outline-secondary:hover {
+        background: firebrick !important;
+        color: #fff !important;
+    }
+    .list-group-item {
+        background: #fff !important;
+    }
+    .border, .card.border {
+        border-color: firebrick !important;
+    }
+    .table th, .table td {
+        color: firebrick !important;
+    }
+</style>
+@endpush
+
 @section('content')
 <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
     <div class="container-fluid py-4 px-5">
@@ -27,14 +64,13 @@
                         $icon = 'bi-moon-stars-fill';
                         $iconColor = '#6c757d';
                     }
-
                     \Carbon\Carbon::setLocale('id');
                     $hari = \Carbon\Carbon::now()->translatedFormat('l, d F Y');
                     $userName = auth()->user()->name ?? 'Admin';
                 @endphp
 
                 <div class="mb-md-0 mb-3 d-flex align-items-center gap-2">
-                    <i class="bi {{ $icon }}" style="font-size:2rem; color: {{ $iconColor }};"></i>
+                    <i class="bi {{ $icon }}" style="font-size:2rem; color: {{ $iconColor }}"></i>
                     <h3 class="font-weight-bold mb-0" style="color:firebrick;">
                         {{ $greeting }}, {{ $userName }}
                     </h3>
@@ -48,10 +84,10 @@
         {{-- Statistik --}}
         <div class="row my-4">
             <div class="col-xl-4 col-md-6 mb-4">
-                <div class="card border" style="border-color:firebrick; background:#fff5f5;">
+                <div class="card border" style="border-color:firebrick;">
                     <div class="card-body d-flex align-items-center">
                         <div class="icon icon-shape rounded-circle me-3 d-flex justify-content-center"
-                             style="width:64px; height:64px; background:firebrick; color:white;">
+                            style="width:64px; height:64px; background:firebrick; color:white;">
                             <i class="bi bi-cash-stack" style="font-size:2.5rem; line-height:1;"></i>
                         </div>
                         <div>
@@ -64,10 +100,10 @@
             </div>
 
             <div class="col-xl-4 col-md-6 mb-4">
-                <div class="card border" style="border-color:firebrick; background:#fff5f5;">
+                <div class="card border" style="border-color:firebrick;">
                     <div class="card-body d-flex align-items-center">
                         <div class="icon icon-shape rounded-circle me-3 d-flex justify-content-center"
-                             style="width:64px; height:64px; background:firebrick; color:white;">
+                            style="width:64px; height:64px; background:firebrick; color:white;">
                             <i class="bi bi-receipt" style="font-size:2.5rem; line-height:1;"></i>
                         </div>
                         <div>
@@ -80,10 +116,10 @@
             </div>
 
             <div class="col-xl-4 col-md-6 mb-4">
-                <div class="card border" style="border-color:firebrick; background:#fff5f5;">
+                <div class="card border" style="border-color:firebrick;">
                     <div class="card-body d-flex align-items-center">
                         <div class="icon icon-shape rounded-circle me-3 d-flex justify-content-center"
-                             style="width:64px; height:64px; background:firebrick; color:white;">
+                            style="width:64px; height:64px; background:firebrick; color:white;">
                             <i class="bi bi-graph-up" style="font-size:2.5rem; line-height:1;"></i>
                         </div>
                         <div>
@@ -152,7 +188,3 @@
     </div>
 </main>
 @endsection
-
-@push('styles')
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-@endpush
