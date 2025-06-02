@@ -18,13 +18,20 @@ class OrderController extends Controller
 
     public function show($id)
     {
-        $product = Product::findOrFail($id);
-        $alamat = '';
-        if (auth()->check()) {
-            $customer = \App\Models\Customer::where('user_id', auth()->id())->first();
-            $alamat = $customer && !empty($customer->address) ? $customer->address : '';
-        }
-        return view('customer.products.show', compact('product', 'alamat'));
+    $order = Order::with('orderItems.product')->findOrFail($id);
+
+    // Cek apakah order ini milik user yang sedang login
+    if ($order->user_id !== auth()->id()) {
+        abort(403); // forbidden
+    }
+
+    $alamat = '';
+    if (auth()->check()) {
+        $customer = \App\Models\Customer::where('user_id', auth()->id())->first();
+        $alamat = $customer && !empty($customer->address) ? $customer->address : '';
+    }
+
+    return view('customer.orders.show', compact('order', 'alamat'));
     }
 
     public function store(Request $request)

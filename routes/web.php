@@ -95,7 +95,7 @@ Route::prefix('customer')->middleware('auth')->name('customer.')->group(function
     // Produk
     Route::prefix('products')->name('products.')->group(function () {
         Route::get('/', [CustomerProductController::class, 'index'])->name('index');
-        Route::get('/{id}', [CustomerOrderController::class, 'show'])->name('show');
+        Route::get('/{id}', [CustomerProductController::class, 'show'])->name('show');
 
         // Reviews
         Route::get('/{product}/reviews', [ReviewController::class, 'index'])->name('reviews.index');
