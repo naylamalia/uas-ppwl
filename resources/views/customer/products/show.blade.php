@@ -52,9 +52,9 @@
                                 <label for="order-quantity" class="form-label">Jumlah</label>
                                 <input type="number" name="quantity" id="order-quantity" class="form-control" value="1" min="1" max="{{ $product->stock }}" required>
                               </div>
-                              <div class="mb-2">
-                                <label for="alamat" class="form-label">Alamat Pengiriman</label>
-                                <textarea name="alamat" id="alamat" class="form-control" rows="2" required>{{ old('alamat') }}</textarea>
+                              <div class="mb-3">
+                                <label for="alamat" class="form-label">Alamat Pemesanan</label>
+                                <textarea class="form-control" id="alamat" name="alamat" rows="3" required>{{ old('alamat', $alamat ?? '') }}</textarea>
                               </div>
                               <div class="mb-2">
                                 <label for="rincian_pemesanan" class="form-label">Catatan/Rincian Pemesanan</label>

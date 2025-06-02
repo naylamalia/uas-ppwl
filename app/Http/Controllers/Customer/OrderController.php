@@ -18,21 +18,23 @@ class OrderController extends Controller
 
     public function show($id)
     {
-        $user = Auth::user();
-        $order = Order::where('id', $id)
-                      ->where('user_id', $user->id)
-                      ->with('orderItems.product')
-                      ->firstOrFail();
-
-        return view('customer.orders.show', compact('order'));
+        $product = Product::findOrFail($id);
+        $alamat = '';
+        if (auth()->check()) {
+            $customer = \App\Models\Customer::where('user_id', auth()->id())->first();
+            $alamat = $customer && !empty($customer->address) ? $customer->address : '';
+        }
+        return view('customer.products.show', compact('product', 'alamat'));
     }
 
     public function store(Request $request)
     {
+        $alamat = $request->input('alamat');
+
         $request->validate([
             'product_id' => 'required|exists:products,id',
             'quantity' => 'required|integer|min:1',
-            'alamat' => 'required|string',
+            'alamat' => 'nullable|string',
             'rincian_pemesanan' => 'nullable|string',
             'pilihan_cod' => 'boolean',
         ]);
@@ -48,7 +50,7 @@ class OrderController extends Controller
         $order = Order::create([
             'user_id' => Auth::id(),
             'price' => $product->price * $request->quantity,
-            'alamat' => $request->alamat,
+            'alamat' => $alamat,
             'rincian_pemesanan' => $request->rincian_pemesanan ?? '',
             'pilihan_cod' => $request->pilihan_cod ?? false,
             'status_order' => 'belum_selesai',

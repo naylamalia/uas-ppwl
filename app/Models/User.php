@@ -54,4 +54,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(CartItem::class);
     }
+    
+    public function customer()
+    {
+        return $this->hasOne(\App\Models\Customer::class, 'user_id');
+    }
 }

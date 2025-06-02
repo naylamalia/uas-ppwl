@@ -22,7 +22,7 @@ return new class extends Migration
             $table->timestamp('order_date')->useCurrent();   // Tanggal/waktu order
 
             $table->text('alamat');                          // Alamat pengiriman
-            $table->text('rincian_pemesanan');               // Detail pemesanan
+            $table->text('rincian_pemesanan')->nullable();               // Detail pemesanan
             $table->boolean('pilihan_cod')->default(false);  // Pilihan COD
 
             $table->enum('status_order', ['selesai', 'belum_selesai'])->default('belum_selesai');

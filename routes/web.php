@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Customer\CartController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Customer\DashboardController as CustomerDashboardController;
+use App\Models\Customer;
 
 /*
 |--------------------------------------------------------------------------
@@ -94,7 +95,7 @@ Route::prefix('customer')->middleware('auth')->name('customer.')->group(function
     // Produk
     Route::prefix('products')->name('products.')->group(function () {
         Route::get('/', [CustomerProductController::class, 'index'])->name('index');
-        Route::get('/{id}', [CustomerProductController::class, 'show'])->name('show');
+        Route::get('/{id}', [CustomerOrderController::class, 'show'])->name('show');
 
         // Reviews
         Route::get('/{product}/reviews', [ReviewController::class, 'index'])->name('reviews.index');
@@ -109,6 +110,7 @@ Route::prefix('customer')->middleware('auth')->name('customer.')->group(function
         Route::delete('/remove/{id}', [CartController::class, 'remove'])->name('remove');
         Route::post('/checkout', [CartController::class, 'checkout'])->name('checkout');
         Route::post('/checkout/confirm', [CartController::class, 'confirmCheckout'])->name('checkout.confirm');
+        Route::post('/update/{productId}', [CartController::class, 'update'])->name('update');
     });
 
     // Orders
