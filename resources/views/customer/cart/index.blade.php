@@ -76,7 +76,7 @@
                             <td class="text-center">
                                 <!-- Tombol hapus, gunakan modal bukan form inline -->
                                 <button type="button" class="btn btn-outline-firebrick btn-sm rounded-circle" title="Hapus"
-                                    onclick="show1DeleteModal('{{ route('customer.cart.remove', (int)$item['product_id']) }}', '{{ $item['name'] }}')">
+                                    onclick="showDeleteModal('{{ route('customer.cart.remove', (int)$item['product_id']) }}', '{{ $item['name'] }}')">
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </td>
