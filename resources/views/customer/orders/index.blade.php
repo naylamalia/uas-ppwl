@@ -56,8 +56,9 @@
             </div>
             @endforeach
         </div>
-        <div class="mt-4 d-flex justify-content-center">
-            {{ method_exists($orders, 'links') ? $orders->links() : '' }}
+        <div class="mt-4 d-flex justify-content-center color-firebrick">
+            {{-- Pagination links --}}
+            {{ $orders->links('pagination::bootstrap-4') }}
         </div>
     @else
         <div class="text-center py-5">
@@ -95,33 +96,38 @@
 }
 .order-card:hover {
     box-shadow: 0 0.5rem 1.5rem rgba(178,34,34,.12);
-    border-color: #b2222222;
+    border-color: #b22222;
 }
 .badge {
-    font-size: 1em;
-    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    border-radius: 0.375rem;
     letter-spacing: .5px;
 }
 .badge-success {
-    background-color: forestgreen;
+    background-color: #28a745;
     color: white;
-    padding: 3px 8px;
-    border-radius: 4px;
-    font-weight: bold;
 }
 .badge-warning {
-    background-color: #f59e42;
-    color: white;
-    padding: 3px 8px;
-    border-radius: 4px;
-    font-weight: bold;
+    background-color: #ffc107;
+    color: #212529;
 }
 .badge-danger {
-    background-color: firebrick;
+    background-color: #dc3545;
     color: white;
-    padding: 3px 8px;
-    border-radius: 4px;
-    font-weight: bold;
+}
+.pagination .page-link {
+    color: firebrick;
+    border-color: firebrick;
+}
+.pagination .page-item.active .page-link {
+    background-color: firebrick;
+    border-color: firebrick;
+    color: #fff;
+}
+.pagination .page-link:hover, .pagination .page-link:focus {
+    background-color: #ffeaea;
+    color: firebrick;
+    border-color: firebrick;
 }
 </style>
 @endpush

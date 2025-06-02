@@ -39,16 +39,17 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="text-end">Rp{{ number_format($item['price'], 0, ',', '.') }}</td>
+                            <td class="text-center text-success fw-bold">Rp{{ number_format($item['price'], 0, ',', '.') }}</td>
                             <td class="text-center">{{ $item['quantity'] }}</td>
-                            <td class="text-end fw-semibold text-firebrick">Rp{{ number_format($item['price'] * $item['quantity'], 0, ',', '.') }}</td>
+                            <td class="text-center fw-semibold text-success">Rp{{ number_format($item['price'] * $item['quantity'], 0, ',', '.') }}</td>
                         </tr>
                     @endforeach
                 </tbody>
                 <tfoot>
                     <tr style="background:#fff5f5;">
-                        <td colspan="2" class="text-end fw-bold">Grand Total</td>
-                        <td colspan="2" class="text-end fw-bold text-firebrick">Rp{{ number_format($grandTotal, 0, ',', '.') }}</td>
+                        <td></td>
+                        <td colspan="2" class="text-end fw-bold">Total</td>
+                        <td colspan="2" class="text-center fw-bold text-success">Rp{{ number_format($grandTotal, 0, ',', '.') }}</td>
                     </tr>
                 </tfoot>
             </table>
@@ -84,14 +85,20 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <div class="mb-3">
-            <label for="alamat" class="form-label">Alamat Lengkap</label>
-            <textarea class="form-control" id="alamat" name="alamat" rows="3" required></textarea>
-          </div>
-          <div class="mb-3">
-            <label for="catatan" class="form-label">Catatan (Opsional)</label>
-            <input type="text" class="form-control" id="catatan" name="catatan">
-          </div>
+            <div class="mb-3">
+                <label for="location" class="form-label">Alamat Lengkap</label>
+                <textarea class="form-control" id="location" name="location" rows="3" required>{{ old('address', $alamat ?? '') }}</textarea>
+            </div>
+            <div class="mb-3">
+                <label for="catatan" class="form-label">Catatan (Opsional)</label>
+                <input type="text" class="form-control" id="catatan" name="catatan">
+            </div>
+            <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" value="1" id="pilihan_cod" name="pilihan_cod">
+            <label class="form-check-label" for="pilihan_cod">
+                Bayar di Tempat (COD)
+            </label>
+            </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
@@ -116,11 +123,6 @@
 .btn-outline-firebrick {
     background: #fff !important;
     color: #B22222 !important;
-}
-.btn-firebrick:hover, .btn-outline-firebrick:hover, .btn-firebrick:focus, .btn-outline-firebrick:focus {
-    background: #e35dd2 !important;
-    color: #fff !important;
-    border-color: #e35dd2 !important;
 }
 .table thead th, .table tfoot tr {
     vertical-align: middle;

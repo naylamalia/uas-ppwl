@@ -9,12 +9,10 @@ class Order extends Model
 {
     use HasFactory;
 
-    // Nama tabel (opsional, kalau sudah sesuai dengan nama model + s biasanya tidak perlu)
     protected $table = 'orders';
 
-    // Kolom yang boleh diisi secara massal
     protected $fillable = [
-        'user_id',
+        'user_id', // <-- Pastikan ini benar
         'price',
         'order_date',
         'alamat',
@@ -23,7 +21,6 @@ class Order extends Model
         'status_order',
     ];
 
-    // Jika ingin otomatis meng-cast tipe data tertentu
     protected $casts = [
         'order_date' => 'datetime',
         'pilihan_cod' => 'boolean',
@@ -35,15 +32,27 @@ class Order extends Model
     {
         return $this->belongsTo(User::class);
     }
-    
+
+    // Relasi ke OrderItem
     public function orderItems()
     {
         return $this->hasMany(OrderItem::class);
     }
-    
+
+    // Relasi ke Product melalui order_items
     public function products()
     {
         return $this->belongsToMany(Product::class, 'order_items', 'order_id', 'product_id')
             ->withPivot(['quantity', 'price']);
+    }
+
+    // Accessor untuk alamat: jika kosong, ambil dari customer via user
+    public function getAlamatAttribute($value)
+    {
+        if (!empty($value)) {
+            return $value;
+        }
+        // Akses customer via user
+        return optional($this->user->customer)->address ?? '';
     }
 }
