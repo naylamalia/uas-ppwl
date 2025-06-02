@@ -1,3 +1,4 @@
+@section('title', 'Reset Password')
 <x-guest-layout>
     <main class="main-content mt-0"
         style="background:white; min-height:100vh;">

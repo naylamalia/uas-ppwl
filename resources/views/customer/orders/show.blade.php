@@ -1,5 +1,6 @@
 {{-- filepath: c:\laragon\www\uas-ppwl\resources\views\Customer\orders\show.blade.php --}}
 @extends('components.app.navbar')
+@section('title', 'Detail Pesanan')
 
 @section('content')
 <div class="container py-4">
