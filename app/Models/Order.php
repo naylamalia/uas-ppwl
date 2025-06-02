@@ -15,8 +15,6 @@ class Order extends Model
     // Kolom yang boleh diisi secara massal
     protected $fillable = [
         'user_id',
-        'product_id',
-        'quantity',
         'price',
         'order_date',
         'alamat',
@@ -37,10 +35,15 @@ class Order extends Model
     {
         return $this->belongsTo(User::class);
     }
-
-    // Relasi ke Product
-    public function product()
+    
+    public function orderItems()
     {
-        return $this->belongsTo(Product::class);
+        return $this->hasMany(OrderItem::class);
+    }
+    
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'order_items', 'order_id', 'product_id')
+            ->withPivot(['quantity', 'price']);
     }
 }

@@ -46,9 +46,16 @@ class Product extends Model
         return $this->hasMany(CartItem::class);
     }
 
-    // Relasi ke Order
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
+    // Relasi many-to-many ke Order melalui order_items (pivot)
     public function orders()
     {
-        return $this->hasMany(Order::class);
+        return $this->belongsToMany(Order::class, 'order_items', 'product_id', 'order_id')
+            ->withPivot(['quantity', 'price']);
     }
+
 }

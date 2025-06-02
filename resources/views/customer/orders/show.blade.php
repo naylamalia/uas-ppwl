@@ -69,8 +69,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if(isset($order->items) && count($order->items))
-                        @foreach($order->items as $item)
+                    @forelse($order->orderItems as $item)
                         <tr>
                             <td>
                                 <div class="d-flex align-items-center gap-2">
@@ -84,22 +83,11 @@
                             <td class="text-end">Rp{{ number_format($item->price, 0, ',', '.') }}</td>
                             <td class="text-end">Rp{{ number_format($item->price * $item->quantity, 0, ',', '.') }}</td>
                         </tr>
-                        @endforeach
-                    @else
+                    @empty
                         <tr>
-                            <td>
-                                <div class="d-flex align-items-center gap-2">
-                                    <div class="bg-light rounded shadow-sm" style="width:40px; height:40px; display:flex; align-items:center; justify-content:center;">
-                                        <i class="bi bi-box-seam text-primary"></i>
-                                    </div>
-                                    <span>{{ $order->product->name ?? '-' }}</span>
-                                </div>
-                            </td>
-                            <td class="text-center">{{ $order->quantity }}</td>
-                            <td class="text-end">Rp{{ number_format($order->price / max($order->quantity,1), 0, ',', '.') }}</td>
-                            <td class="text-end">Rp{{ number_format($order->price, 0, ',', '.') }}</td>
+                            <td colspan="4" class="text-center text-muted">Tidak ada produk pada pesanan ini.</td>
                         </tr>
-                    @endif
+                    @endforelse
                 </tbody>
                 <tfoot>
                     <tr>

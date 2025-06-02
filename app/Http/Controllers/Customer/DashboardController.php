@@ -16,10 +16,10 @@ class DashboardController extends Controller
             ->limit(6)
             ->get();
 
-        // Produk populer (berdasarkan jumlah order terbanyak)
+        // Produk populer (berdasarkan jumlah order terbanyak via order_items)
         $popularProducts = Product::select('products.*')
-            ->leftJoin('orders', 'products.id', '=', 'orders.product_id')
-            ->selectRaw('COUNT(orders.id) as orders_count')
+            ->leftJoin('order_items', 'products.id', '=', 'order_items.product_id')
+            ->selectRaw('COUNT(order_items.id) as orders_count')
             ->groupBy('products.id')
             ->orderByDesc('orders_count')
             ->limit(6)

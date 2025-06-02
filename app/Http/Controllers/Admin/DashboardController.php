@@ -16,10 +16,19 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $totalRevenue = Order::sum('price');
+        // Total revenue dari semua order_items (pivot)
+        $totalRevenue = DB::table('order_items')->sum(DB::raw('price * quantity'));
+
+        // Total order (jumlah order)
         $orderCount = Order::count();
-        $avgTransaction = Order::avg('price');
-        $recentOrders = Order::with(['product', 'user'])->latest()->limit(5)->get();
+
+        // Rata-rata transaksi (dari order_items)
+        $avgTransaction = DB::table('order_items')->avg(DB::raw('price * quantity'));
+
+        // 5 order terbaru beserta produk dan user (menggunakan with dan relasi many-to-many)
+        $recentOrders = Order::with(['products', 'user'])->latest()->limit(5)->get();
+
+        // Overview status order
         $orderOverview = Order::select('status_order', DB::raw('count(*) as total'))
             ->groupBy('status_order')->get();
 
